@@ -1,6 +1,6 @@
 ---
 app.id: 'sher'
-app.version: '1.0'
+app.version: '2.0'
 app.modules.boot: 'sher'
 
 app.modules.sher: 
@@ -40,9 +40,9 @@ app.session.online_ttl: 600
 app.session.engine.options:
    # mongodb session optional:
    'collection': 'session'
-app.session.sid: 'sher_sid'
+app.session.sid: 'lab_sid'
 #auth cookie:
-app.session.auth_sid: 'sher_asid'
+app.session.auth_sid: 'lab_asid'
 # session secret key
 #app.session.secret_key: 'Frbird#2018Up'
 app.session.secret_key: 'Frbird#2015Up'
@@ -103,7 +103,7 @@ app.qiniu.bucket: 'frbird'
 
 app.keychains.private: 'xxxxOOOOxxxx'
 app.email.from:
-  address: 'no-reply@taihuoniao.com'
+  address: 'no-reply@microlab.com'
   name: '系统邮件服务'
 
 # 微信服务号配置信息
@@ -145,10 +145,6 @@ app.wechat.report_levenl : 1
 # 财付通
 app.tenpay.partner: '1220172801'
 app.tenpay.key: 'c61bea76f78ee72048aaa6570ad36ab3'
-
-# 太火鸟App Key
-app.frbird.key: '1415289600'
-app.frbird.sercet: '545d9f8aac6b7a4d04abffe5'
 
 # 附件存储目录
 app.storage.sher:
