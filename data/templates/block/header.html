@@ -1,0 +1,78 @@
+<div class="headerbox">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="column">
+                <div class="ui inverted secondary pointing menu">
+                    <div class="img item">
+                        <img src="/images/microlab.jpg" alt="麦博" class="ui" />
+                    </div>
+                    <a href="{{ app_url_domain }}" class="{{ css_page_home }} item">
+                        首页
+                    </a>
+              		<a href="{{ app_url_shop }}/speaker" class="{{ css_page_speaker }} item">
+                        音箱
+              		</a>
+              		<a href="{{ app_url_shop }}/headset" class="{{ css_page_headset }} item">
+                        耳机
+              		</a>
+              		<a href="{{ app_url_shop }}/wireless" class="{{ css_page_wireless }} item">
+                        无线
+              		</a>
+              		<a href="{{ app_url_shop }}/hifi" class="{{ css_page_hifi }} item">
+                        玄道HIFI
+              		</a>
+              		<a href="{{ app_url_guide }}/service" class="{{ css_page_service }} item">
+                        服务与支持
+              		</a>
+                    <div class="img item">
+                        <a href="{{ app_url_search }}" title="搜索">
+                            <img src="/images/icon-search.png" alt="搜索" />
+                        </a>
+                    </div>
+                    
+                    {% if visitor %}
+                    <div class="right menu">
+                        <div class="ui dropdown account item">
+                            {{ visitor.nickname }}
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                    		    <a class="item" href="{{ app_url_my }}/orders">
+                    		      	<i class="shop icon"></i> 我的订单
+                    			</a>
+                    			{% if visitor.can_admin %}
+                    		    <a class="item" href="{{ app_url_admin_base }}">
+                    		      	<i class="dashboard icon"></i> 管理后台
+                    			</a>
+                    			{% endif %}
+                    		  	<a class="item" href="{{ app_url_logout }}">
+                    		    	<i class="sign out icon"></i> 安全退出
+                    			</a>
+                            </div>
+                        </div>
+                        <div class="cart item">
+                    		{% if items_count > 0 %}
+                    	    <label class="floating circular ui magenta basketnumber label" style="padding: 0.5em 0!important;">{{ items_count }}</label>
+                    		{% else %}
+                    		<label class="floating circular ui magenta basketnumber label hide"></label>
+                    		{% endif %}
+                            <a href="{{ app_url_shopping }}/cart" title="购物车">
+                                <img src="/images/icon-cart.png" alt="购物车" />
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="right menu">
+                  		<a href="{{ app_url_login }}" class="{{ css_page_social }} item">
+                            登录
+                  		</a>
+                  		<a href="{{ app_url_register }}" class="{{ css_page_social }} item">
+                            注册
+                  		</a>
+                    </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

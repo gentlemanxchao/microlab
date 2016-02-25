@@ -1,0 +1,98 @@
+{%extends 'layout/base.html'%}
+
+{% block page_css %}
+<style type="text/css">
+.shopcate {
+    background-color: #f7f7f7;
+    padding-bottom: 30px;
+    margin: 0px auto 15px;
+}
+.shopcate .ui.list > .item > .image {
+    display: inline-block;
+    overflow: hidden;
+    width: 240px;
+    max-height: 100px;
+}
+.shopcate .ui.list > .item > .catitle {
+    margin-top: 10px;
+}
+.active.category {
+    color: #222;
+    border-bottom: 2px solid #222;
+    padding-bottom: 5px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% category_list var:"list" gid:gid current:category_id %}
+{% if list.rows %}
+<div class="shopcate">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="center aligned column">
+                <div class="ui horizontal list">
+                    {% for cat in list.rows %}
+                    <div class="item">
+                        <a href="{{ cat.view_url }}" class="image">
+                            <img src="{{ cat.cover }}" />
+                        </a>
+                        <p class="catitle">
+                            <a href="{{ cat.view_url }}" class="{{ cat.active }}">{{ cat.title }}</a>
+                        </p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% if current_category %}
+        <div class="row">
+            <div class="center aligned column">
+                <h1 class="ui header">
+                    <label class="active category">{{ current_category.title }}</label>
+                </h1>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<div class="shoplist">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="column">
+                {% product_list var:'products' category_id:category_id page:page size:12 %}
+                <div class="ui three cards">
+                    {% if products.rows %}
+                        {% for product in products.rows %}
+                        <div class="card">
+                            <a href="{{ product.view_url }}" title="{{ product.title }}" class="image">
+                                <img src="{{ product.cover.thumbnails.large.view_url }}" />
+                            </a>
+                        
+                            <div class="content">
+                                <h4 class="title">
+                                    <a href="{{ product.view_url }}" title="{{ product.title }}">{{ product.title }}</a>
+                                </h4>
+                                <p class="advantage">{{ product.advantage }}</p>
+                                <p class="price">RMB{{ product.sale_price }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if products.total_page > 1 %}
+        <div class="row">
+            <div class="center aligned column">
+        		{% pager url:pager_url,total_rows:products.total_rows,total_page:products.total_page,current_page:page,var:'pager',pager_size:9 %}
+        		{%include 'block/pager.html'%}
+            </div>
+        </div>
+        {% endif %}
+    </div> 
+</div>
+{% endblock %}

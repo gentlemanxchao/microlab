@@ -1,0 +1,64 @@
+{%extends 'layout/base.html'%}
+
+{% block page_css %}
+<style type="text/css">
+    .flexslider .slides li {
+        min-height: 500px;
+    }
+</style>
+{% endblock %}
+
+{% block jquery %}
+    $("#slider").flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: true,
+        slideshow: false,
+    }); 
+{% endblock %}
+
+{% block content %}
+<div id="homepage">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="column">
+                {% ad_list var:'adslide' page:1 size:4 state:2 name:'index_slide' %}
+                <div id="slider" class="flexslider"> 
+                    <ul class="slides"> 
+    	                {% for ad in adslide.rows %}
+                            <li style="background-image: url('{{ ad.cover.fileurl }}');">
+                                <a href="{{ ad.view_url }}" title="{{ ad.title }}" alt="{{ ad.title }}" target="_blank">
+                                    <img src="{{ ad.cover.fileurl }}" alt="{{ ad.title }}" style="display: none;" />
+                                </a>
+                            </li>
+    					{% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="ui four blocks">
+                    <div class="block">
+                        <a href="#" title="CES">
+                            <img src="/images/sk-product-t8.jpg" alt="CES" />
+                        </a>
+                    </div>
+                    <div class="block">
+                        <a href="#" title="FC50">
+                            <img src="/images/sk-product-fc50.jpg" alt="FC50" />
+                        </a>
+                    </div>
+                    <div class="block">
+                        <a href="#" title="MD213">
+                            <img src="/images/sk-product-md213.jpg" alt="MD213" />
+                        </a>
+                    </div>
+                    <div class="block">
+                        <a href="#" title="FC360">
+                            <img src="/images/sk-product-fc360.jpg" alt="FC360" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+{% endblock %}

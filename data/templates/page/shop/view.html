@@ -1,0 +1,171 @@
+{%extends 'layout/base.html'%}
+
+{% block page_css %}
+<style type="text/css">
+.product.bread {
+    background-color: #f7f7f7;
+    margin: 0px auto 15px;
+}
+.product.content {
+    background-color: #f8f8f8;
+}
+.ui.breadcrumb a.section {
+    color: #555;
+}
+.price {
+    color: #d65454;
+    font-size: 18px;
+}
+.price small {
+    font-size: 12px;
+}
+.attrs {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+.attrs.buy {
+    padding-top: 20px;
+}
+.attrs.buy .quantity {
+    border: 1px solid #eee;
+    padding: 3px 5px;
+    text-align: center;
+    width: 50px;
+}
+.btns {
+    padding-top: 20px;
+}
+
+</style>
+{% endblock %}
+
+{% block jquery %}
+    
+    $('#carousel').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 120,
+        itemMargin: 10,
+        asNavFor: '#slider'
+    });
+
+    $('#slider').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel"
+    });
+          
+	// 如果仅一个sku,则设置默认值
+	{% if skus_count %}
+		var choosed_sku = 0;
+	{% else %}
+		var choosed_sku = {{ product._id }};
+	{% endif %}
+    
+	// 加入购物车
+	$('.ui.tobuy.button').click(function(){
+		if (choosed_sku){
+			$.post('{{ app_url_cart_buy }}', {sku: choosed_sku});
+		} else {
+			sher.show_error_note('请选择一个型号或颜色', 3000);
+		}
+	});
+    
+  	// 立即购买
+    $('.ui.nowbuy.button').livequery(function(){
+        $(this).click(function(){
+            // 所有ajax请求，验证是否登录
+            if (!sher.visitor.is_login){
+                sher.show_login_box();
+                return false;
+            }
+            if (choosed_sku){
+                sher.redirect('{{ app_url_cart_nowbuy }}?sku='+choosed_sku, 0);
+            } else {
+                sher.show_error_note('请选择一个型号或颜色', 3000);
+            }
+          }); 
+    });
+
+{% endblock %}
+
+{% block content %}
+<div class="product bread">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="column">
+                <div class="ui breadcrumb">
+                    <a class="section" href="{{ app_url_domain }}">首页</a>
+                    <i class="right angle icon divider"></i>
+                    <a class="section">Store</a>
+                    <i class="right angle icon divider"></i>
+                    <div class="active section">{{ product.title }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="product info">
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="eight wide column">
+                {% asset_list var:'assets' parent_id:product._id asset_type:10 size:20 %}
+                <div id="slider" class="flexslider">
+                    <ul class="slides">
+                        <li><img src="{{ product.cover.thumbnails.large.view_url }}" /></li>
+						{% for asset in assets.rows %}
+                            {% if product.cover_id != asset._id %}
+                            <li><img src="{{ asset.thumbnails.large.view_url }}" /></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div id="carousel" class="flexslider">
+                    <ul class="slides">
+                        <li><img src="{{ product.cover.thumbnails.mini.view_url }}" /></li>
+						{% for asset in assets.rows %}
+                            {% if product.cover_id != asset._id %}
+                            <li><img src="{{ asset.thumbnails.mini.view_url }}" /></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            
+            </div>
+            <div class="eight wide column">
+                <div class="attrs">
+                    <h3 class="ui header">{{ product.title }}</h3>
+                    <p>{{ product.summary }}</p>
+                </div>
+                <div class="attrs buy">
+                    <p>购买数量： <input type="text" value="1" name="quantity" class="quantity" /></p>
+                    <p>价格： <span class="price">{{ product.sale_price }}<small>元</small></span></p>
+                </div>
+                <div class="btns">
+                    <div class="ui inverted black tobuy large active button">加入购物车</div>
+                    <div class="ui inverted red nowbuy large active button">立即购买</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div class="product content">   
+    <div class="ui responsive grid">
+        <div class="row">
+            <div class="column">
+                <h3 class="ui header">商品详情</h3>
+                <div class="desc">
+                    {{ product.content }}
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+</div>
+{% endblock %}

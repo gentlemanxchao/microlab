@@ -1,0 +1,16 @@
+<?php
+//deployed on: Tue Feb 16 13:12:20 2016
+define('DOGGY_VERSION','v1.3.9-dev');
+define('DOGGY_APP_ROOT','/Users/xiaoyi/Project/microlab/dev_root');
+define('DOGGY_APP_CLASS_PATH','/Users/xiaoyi/Project/microlab/vendor:/Users/xiaoyi/Project/microlab/src');
+require '/Users/xiaoyi/Project/microlab/doggy/src/Doggy.php';
+// ---------------BEGIN INCLUDE deploy/app.include.php
+
+// composer support
+require 'autoload.php';
+
+// ---------------END INCLUDE deploy/app.include.php
+
+@require '/Users/xiaoyi/Project/microlab/dev_root/var/doggy_app.rc';
+Doggy_Dispatcher_Server::run();
+?>
