@@ -67,7 +67,7 @@
 	    }
     }).on('complete', function (event, id, name, result) {
 		if(result.is_error){
-			phenix.show_error_note(result.message);
+			sher.show_error_note(result.message);
 		}else{
 			$('.qq-upload-list').children().eq(id).fadeOut();
 			

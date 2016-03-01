@@ -58,16 +58,16 @@
 			$(this).ajaxSubmit({
 				dataType: 'json',
 				beforeSubmit: function(){
-					phenix.before_submit();
+					sher.before_submit();
 				},
 				success: function(data){
-					phenix.after_submit();
+					sher.after_submit();
 					
 					if(data.is_error){
 						$(event.target).addClass('error');
-						phenix.show_error_note(data.message, 3000);
+						sher.show_error_note(data.message, 3000);
 					}else{
-						phenix.show_ok_note(data.message, 3000);
+						sher.show_ok_note(data.message, 3000);
             location.reload();
 					}
 				}
