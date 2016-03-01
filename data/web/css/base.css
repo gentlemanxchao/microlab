@@ -24,8 +24,11 @@ body,
     padding-bottom: 20px;
 }
 
+.ui.grey.inverted.button {
+    color: rgb(212, 212, 213);
+}
 
-a {
+a,.ui.breadcrumb a {
     color: rgb(37, 37, 37);
 }
 .ui.white.header {

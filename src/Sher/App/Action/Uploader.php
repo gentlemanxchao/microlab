@@ -243,7 +243,7 @@ class Sher_App_Action_Uploader extends Sher_App_Action_Base implements Doggy_Dis
 
 		return $this->handle_upload($asset_type, $asset_domain);
 	}
-	
+    
 	/**
 	 * 处理图片的上传
 	 */
