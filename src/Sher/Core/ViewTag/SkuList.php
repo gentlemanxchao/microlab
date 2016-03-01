@@ -19,7 +19,6 @@ class Sher_Core_ViewTag_SkuList extends Doggy_Dt_Tag {
         $size = 10;
 		
         $product_id = 0;
-		$stage = 0;
 		$sku = 0;
 		
         $var = 'list';
@@ -48,10 +47,6 @@ class Sher_Core_ViewTag_SkuList extends Doggy_Dt_Tag {
 		
 		if ($product_id) {
 			$query['product_id'] = (int)$product_id;
-		}
-		
-		if ($stage) {
-			$query['stage'] = (int)$stage;
 		}
 		
         $service = Sher_Core_Service_Inventory::instance();

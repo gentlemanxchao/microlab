@@ -196,7 +196,6 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 					'mode' => $mode,
 					'quantity' => (int)$quantity,
 					'price' => (float)$price,
-					'stage' => Sher_Core_Model_Inventory::STAGE_SHOP,
 				);
 				$ok = $inventory->apply_and_save($new_data);
 				
@@ -211,14 +210,13 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 					'mode' => $mode,
 					'quantity' => (int)$quantity,
 					'price' => (float)$price,
-					'stage' => Sher_Core_Model_Inventory::STAGE_SHOP,
 				);
 				$ok = $inventory->apply_and_update($updated);
 			}
 			$result = $inventory->load((int)$r_id);
 			
 			// 重新更新产品库存数量
-			$total_quantity = $inventory->recount_product_inventory((int)$product_id, Sher_Core_Model_Inventory::STAGE_SHOP, false);
+			$total_quantity = $inventory->recount_product_inventory((int)$product_id, 1, false);
 			
 		}catch(Doggy_Model_ValidateException $e){
 			return $this->ajax_notification('验证数据不能为空：'.$e->getMessage(), true);
@@ -249,7 +247,7 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 			$inventory = new Sher_Core_Model_Inventory();
 			$ok = $inventory->remove($r_id);
 			if($ok){
-				$inventory->mock_after_remove($product_id, Sher_Core_Model_Product::STAGE_SHOP);
+				$inventory->mock_after_remove($product_id);
 			}
 			$model = new Sher_Core_Model_Product();
 			$product = $model->load($product_id);

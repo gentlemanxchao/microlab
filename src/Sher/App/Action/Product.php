@@ -250,7 +250,7 @@ class Sher_App_Action_Product extends Sher_App_Action_Base implements DoggyX_Act
 				$inventory = new Sher_Core_Model_Inventory();
 				$ok = $inventory->remove((int)$r_id);
 				if($ok){
-					$inventory->mock_after_remove($product_id, $product['stage']);
+					$inventory->mock_after_remove($product_id);
 				}
 			} else {
 				return $this->ajax_notification('删除设置权限不足！', true);

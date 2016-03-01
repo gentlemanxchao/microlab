@@ -350,7 +350,7 @@
 				产品型号/颜色/数量
 			</h4>
             
-			{% sku_list var:'skus' product_id:product._id stage:9 %}
+			{% sku_list var:'skus' product_id:product._id %}
 			<div class="ui five cards" id="product-skus">
 				{% for sku in skus.rows %}
 				<div class="card" id="{{ sku._id }}" data-id="{{ sku._id }}">

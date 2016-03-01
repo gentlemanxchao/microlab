@@ -28,14 +28,14 @@ app.url.tag: '/tag'
 # 分类
 app.url.category.list: '{$app.url.action_base}/shop/getlist?gid=%s&category_id=%s'
 
+app.url.topic: '{$app.url.domain}/topic'
+app.url.topic.list : '{$app.url.topic}/list-c%s-t%s-d%s-t%s-p%s.html'
+app.url.topic.view: '{$app.url.topic}/view-%s-%s.html'
+
 # 商店
 app.url.shop: '{$app.url.action_base}/shop'
 app.url.shop.list: '{$app.url.shop}'
 app.url.shop.view: '{$app.url.shop}/view?id=%s'
-# 新闻
-app.url.topic: '{$app.url.action_base}/topic'
-app.url.topic.list : '{$app.url.topic}/list-c%s-t%s-d%s-t%s-p%s.html'
-app.url.topic.view: '{$app.url.topic}/view?id=%s'
 
 # 产品编辑
 app.url.product: '{$app.url.action_base}/product'
@@ -89,8 +89,6 @@ app.url.my.order_mm_view: '{$app.domain.mobile}/my/order_view?rid=%s'
 
 #个人主页
 app.url.user:			'{$app.url.domain}/user'
-app.url.user.love:		'{$app.url.domain}/user/%s/love'
-app.url.user.album:		'{$app.url.domain}/user/%s/album'
 app.url.user.view:		'{$app.url.user}/%s'
 
 #在线支付
@@ -134,7 +132,6 @@ app.url.default_thumb_middle_height: 180
 
 # 帮助中心
 app.url.helper: '{$app.url.action_base}/helper'
-
 app.url.guide: '{$app.url.action_base}/guide'
 app.url.about: '{$app.url.guide}/about'
 app.url.contact: '{$app.url.guide}/contact'

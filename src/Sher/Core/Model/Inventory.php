@@ -10,12 +10,6 @@ class Sher_Core_Model_Inventory extends Sher_Core_Model_Base  {
 	
 	protected $mongo_id_style = DoggyX_Model_Mongo_Base::MONGO_ID_CUSTOM;
 	
-	# 产品周期stage
-    const STAGE_VOTE     = 1;
-    const STAGE_PRESALE  = 5;
-    const STAGE_SHOP     = 9;
-    const STAGE_EXCHANGE = 12;
-	
     protected $schema = array(
 		# sku
 		'_id' => null,
@@ -86,30 +80,29 @@ class Sher_Core_Model_Inventory extends Sher_Core_Model_Base  {
     protected function after_save() {
 		// 更新产品sku count
 		$product_id = $this->data['product_id'];
-		$stage = $this->data['stage'];
-		Doggy_Log_Helper::debug("After save inventory:[$product_id],[$stage]! ");
-		$field = ($stage == self::STAGE_PRESALE) ? 'mode_count' : 'sku_count';
+		Doggy_Log_Helper::debug("After save inventory:[$product_id]! ");
+		$field = 'sku_count';
 		if (!empty($product_id)) {
 			$product = new Sher_Core_Model_Product();
 			$product->inc_counter($field, 1, (int)$product_id);
 			unset($product);
 			
-			$this->recount_product_inventory($product_id, $stage);
+			$this->recount_product_inventory($product_id, 1);
 		}
     }
 	
 	/**
 	 * 删除后事件
 	 */
-	public function mock_after_remove($product_id, $stage=self::STAGE_PRESALE) {
-		$field = ($stage == self::STAGE_PRESALE) ? 'mode_count' : 'sku_count';
+	public function mock_after_remove($product_id) {
+		$field = 'sku_count';
 		// 更新产品sku count
 		if (!empty($product_id)) {
 			$product = new Sher_Core_Model_Product();
 			$product->dec_counter($field, (int)$product_id);
 			unset($product);
 			
-			$this->recount_product_inventory($product_id, $stage);
+			$this->recount_product_inventory($product_id, 1);
 		}
 		
 		return true;
@@ -121,7 +114,6 @@ class Sher_Core_Model_Inventory extends Sher_Core_Model_Base  {
 	public function recount_product_inventory($product_id, $stage, $updated=true){
 		$result = $this->find(array(
 			'product_id' => (int)$product_id,
-			'stage' => (int)$stage,
 		));
 		
 		$inventory = 0;
@@ -133,7 +125,7 @@ class Sher_Core_Model_Inventory extends Sher_Core_Model_Base  {
 		
 		Doggy_Log_Helper::debug("Recount product inventory:[$product_id],[$inventory]! ");
 		
-		$field = ($stage == self::STAGE_PRESALE) ? 'presale_inventory' : 'inventory';
+		$field = 'inventory';
 		
 		// 直接返回库存数量
 		if(!$updated){
