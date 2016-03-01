@@ -148,7 +148,6 @@ class Sher_Core_Model_Orders extends Sher_Core_Model_Base {
 	
 	protected function extra_extend_model_row(&$row) {
 		$row['view_url'] = Sher_Core_Helper_Url::order_view_url($row['rid']);
-		$row['mm_view_url'] = Sher_Core_Helper_Url::order_mm_view_url($row['rid']);
 		if ($row['status'] == Sher_Core_Util_Constant::ORDER_WAIT_PAYMENT && $row['payment_method'] == 'a'){
 			$row['pay_url'] = Doggy_Config::$vars['app.url.alipay'];
 		}
@@ -173,19 +172,19 @@ class Sher_Core_Model_Orders extends Sher_Core_Model_Base {
 			$row['from_site_label'] = $this->get_from_label($row['from_site']);
 		}
 
-    // 支付方式
-    $row['trade_site_name'] = null;
-    if (in_array($row['status'], array(10, 12, 13, 15, 20))){
-      if (isset($row['trade_site']) && !empty($row['trade_site'])){
-        $row['trade_site_name'] = $this->get_trade_site_label($row['trade_site']);
-      }   
-    }
+        // 支付方式
+        $row['trade_site_name'] = null;
+        if (in_array($row['status'], array(10, 12, 13, 15, 20))){
+          if (isset($row['trade_site']) && !empty($row['trade_site'])){
+            $row['trade_site_name'] = $this->get_trade_site_label($row['trade_site']);
+          }   
+        }
 
 		// 优惠金额
 		if (!isset($row['gift_money'])){
 			$row['gift_money'] = 0;
 		}
-    $bird_coin_money = isset($row['bird_coin_money'])?$row['bird_coin_money']:0;
+        $bird_coin_money = isset($row['bird_coin_money'])?$row['bird_coin_money']:0;
 		$row['discount_money'] = $row['coin_money'] + $row['card_money'] + $row['gift_money'] + $bird_coin_money;
 	}
 	
@@ -317,21 +316,21 @@ class Sher_Core_Model_Orders extends Sher_Core_Model_Base {
 			$gift->mark_used($gift_code, $this->data['user_id'], $rid);
 		}
 
-    // 用户鸟币扣除
-    $bird_coin = $this->data['bird_coin_count'];
-    if(isset($bird_coin) && !empty($bird_coin)){
-      // 增加积分
-      $service = Sher_Core_Service_Point::instance();
-      // 购买商品扣除相应鸟币
-      $service->make_money_out($this->data['user_id'], (int)$bird_coin, '积分兑换商品');
-    }
+        // 用户鸟币扣除
+        $bird_coin = $this->data['bird_coin_count'];
+        if(isset($bird_coin) && !empty($bird_coin)){
+            // 增加积分
+            $service = Sher_Core_Service_Point::instance();
+            // 购买商品扣除相应鸟币
+            $service->make_money_out($this->data['user_id'], (int)$bird_coin, '积分兑换商品');
+        }
 		
 		// 更新订单总数
 		Sher_Core_Util_Tracker::update_order_counter();
 		
 		// 更新订单索引
-		$indexer = Sher_Core_Service_OrdersIndexer::instance();
-		$indexer->build_orders_index($rid);
+		// $indexer = Sher_Core_Service_OrdersIndexer::instance();
+		// $indexer->build_orders_index($rid);
     }
 	
 	/**
