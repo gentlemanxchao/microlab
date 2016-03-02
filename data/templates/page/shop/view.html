@@ -9,6 +9,17 @@
 .product.content {
     background-color: #f8f8f8;
 }
+.product.content .desc > p {
+    margin: 0 !important;
+}
+.product.content .desc img.fr-fin {
+    box-sizing: content-box;
+    display: block;
+    margin: 0 auto;
+}
+.product.content .desc img.fr-fin.fr-dib {
+    max-width: 100%;
+}
 .ui.breadcrumb a.section {
     color: #555;
 }
@@ -183,7 +194,7 @@
         <div class="row">
             <div class="column">
                 <h3 class="ui header">商品详情</h3>
-                <div class="desc">
+                <div class="froala-element desc">
                     {{ product.content }}
                 </div>
             </div>
