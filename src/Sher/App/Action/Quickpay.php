@@ -10,7 +10,7 @@ class Sher_App_Action_Quickpay extends Sher_App_Action_Base implements DoggyX_Ac
 	
 	public $pay_config = array(
 		/* 商户号，上线时务必将测试商户号替换为正式商户号 */
-		'merId' => '898111153990242',
+		'merId' => '777290058126409',
 	);
 	
 	protected $exclude_method_list = array('execute','secrete_notify');
@@ -23,7 +23,7 @@ class Sher_App_Action_Quickpay extends Sher_App_Action_Base implements DoggyX_Ac
      *   'merId'         => '898111153990242', //商户填写
      *   'acqCode'       => '',  //收单机构填写
      *   'merCode'       => '',  //收单机构填写
-     *   'merAbbr'       => '北京太火红鸟科技有限公司',
+     *   'merAbbr'       => '',
      * );
 	 */
 	public function _init() {
