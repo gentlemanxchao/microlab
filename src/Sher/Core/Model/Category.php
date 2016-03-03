@@ -58,7 +58,7 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	
     protected $int_fields = array('gid','pid','order_by','domain','is_open','total_count','state','reply_count');
 
-	protected $required_fields = array('title');
+	protected $required_fields = array('title','gid');
 	
     protected $joins = array();
 	
@@ -94,7 +94,7 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	 * 获取顶级分类
 	 */
 	public function find_top_category($domain=0){
-		$query = array('pid' =>0 );
+		$query = array('pid' => 0);
 		if ($domain){
 			$query['domain'] = (int)$domain;
 		}
@@ -109,6 +109,15 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	    if (isset($data['tags']) && !is_array($data['tags'])) {
 	        $data['tags'] = array_values(array_unique(preg_split('/[,，、\s]+/u', $data['tags'])));
 	    }
+        // 检查子分类与父分类，所属组是否一致
+        if (!empty($data['pid'])) {
+            $parent = $this->load((int)$data['pid']);
+            // 强制保持一致
+            if ($data['gid'] != $parent['gid']) {
+                $data['gid'] = $parent['gid'];
+            }
+        }
+        
 	    $data['updated_on'] = time();
 	    parent::before_save($data);
 	}

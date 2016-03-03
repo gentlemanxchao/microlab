@@ -10,6 +10,15 @@
 					prompt : '分类名称不能为空'
 				}
 			]
+		},
+		gid: {
+			identifier  : 'gid',
+			rules: [
+				{
+					type   : 'empty',
+					prompt : ' 所属类组不能为空'
+				}
+			]
 		}
 	}, {
 		inline: true,
@@ -56,7 +65,9 @@
 				    <div class="default text">请选择</div>
 				    <div class="menu">
 						{% for cate in top_category %}
-						<div data-value="{{ cate._id }}" class="{% if cate._id == category.pid %}active {% endif %}item">{{ cate.title }}</div>
+                            {% if cate._id != category._id %}
+    						<div data-value="{{ cate._id }}" class="{% if cate._id == category.pid %}active {% endif %}item">{{ cate.title }}</div>
+                            {% endif %}
 						{% endfor %}
 				    </div>
 				</div>
