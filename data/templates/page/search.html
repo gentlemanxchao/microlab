@@ -22,7 +22,7 @@
 	<div class="ui responsive grid">
 		<div class="row">
 			<div class="column">
-                {% search_list var:'products' page:page size:1 search_word:q %}
+                {% search_list var:'products' page:page size:12 search_word:q %}
                 {% if products.rows %}
                 <div class="ui three cards">
                     {% for product in products.rows %}
