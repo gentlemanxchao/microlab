@@ -28,7 +28,7 @@
 		</form>
 	</div>
     
-	{% category_list var:'list' page:page only_open:only_open q:q %}
+	{% category_list var:'list' page:page size:100 only_open:only_open istop:1 q:q %}
 	<table class="ui small table segment">
 		<thead>
 			<tr>
@@ -60,7 +60,7 @@
 					</div>
 				</td>
 			</tr>
-				{% category_list var:'children' page:1 only_open:only_open pid:cat._id %}
+				{% category_list var:'children' page:1 size:50 only_open:only_open pid:cat._id %}
 				{% for child in children.rows %}
 				<tr id="{{ child._id }}" class="negative">
 					<td>
