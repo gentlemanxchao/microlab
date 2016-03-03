@@ -26,7 +26,7 @@
 
 {% block content %}
 
-{% category_list var:"list" gid:gid current:category_id %}
+{% category_list var:"list" gid:gid istop:1 only_open:1 current:parent_id %}
 {% if list.rows %}
 <div class="shopcate">
     <div class="ui responsive grid">
@@ -34,7 +34,7 @@
             <div class="center aligned column">
                 <div class="ui horizontal list">
                     {% for cat in list.rows %}
-                    <div class="item">
+                    <div class="{{ cat.active }} item">
                         <a href="{{ cat.view_url }}" class="image">
                             <img src="{{ cat.cover }}" />
                         </a>
@@ -46,12 +46,17 @@
                 </div>
             </div>
         </div>
-        {% if current_category %}
+        {% if parent_id %}
         <div class="row">
             <div class="center aligned column">
-                <h1 class="ui header">
-                    <label class="active category">{{ current_category.title }}</label>
-                </h1>
+                {% category_list var:"children" pid:parent_id current:current_category._id %}
+                {% if children.rows %}
+                <div class="ui buttons">
+                    {% for child in children.rows %}
+                    <a href="{{ child.view_url }}" class="ui grey {{ child.active }} button">{{ child.title }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}
@@ -63,26 +68,35 @@
     <div class="ui responsive grid">
         <div class="row">
             <div class="column">
-                {% product_list var:'products' category_id:category_id page:page size:12 %}
+                {% product_list var:'products' category_id:query_category_id page:page size:12 %}
+                {% if products.rows %}
                 <div class="ui three cards">
-                    {% if products.rows %}
-                        {% for product in products.rows %}
-                        <div class="card">
-                            <a href="{{ product.view_url }}" title="{{ product.title }}" class="image">
-                                <img src="{{ product.cover.thumbnails.large.view_url }}" />
-                            </a>
-                        
-                            <div class="content">
-                                <h4 class="title">
-                                    <a href="{{ product.view_url }}" title="{{ product.title }}">{{ product.title }}</a>
-                                </h4>
-                                <p class="advantage">{{ product.advantage }}</p>
-                                <p class="price">RMB{{ product.sale_price }}</p>
-                            </div>
+                    {% for product in products.rows %}
+                    <div class="card">
+                        <a href="{{ product.view_url }}" title="{{ product.title }}" class="image">
+                            <img src="{{ product.cover.thumbnails.large.view_url }}" />
+                        </a>
+                    
+                        <div class="content">
+                            <h4 class="title">
+                                <a href="{{ product.view_url }}" title="{{ product.title }}">{{ product.title }}</a>
+                            </h4>
+                            <p class="advantage">{{ product.advantage }}</p>
+                            <p class="price">RMB{{ product.sale_price }}</p>
                         </div>
-                        {% endfor %}
-                    {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
+                {% else %}
+				<div class="ui icon grey message">
+                    <i class="info icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            该类别下暂时未上架产品，请尝试浏览其他类别的产品。
+                        </div>
+                    </div>
+				</div>
+                {% endif %}
             </div>
         </div>
         {% if products.total_page > 1 %}

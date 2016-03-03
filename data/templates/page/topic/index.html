@@ -49,7 +49,7 @@
     <div class="ui responsive grid">
         <div class="row">
             <div class="column">
-                {% topic_list var:'topics' category_id:cid page:page size:12 %}
+                {% topic_list var:'topics' category_id:cid page:page size:12 published:1 %}
                 <div class="ui three cards">
                     {% if topics.rows %}
                         {% for topic in topics.rows %}

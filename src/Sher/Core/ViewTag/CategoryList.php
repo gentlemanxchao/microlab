@@ -23,6 +23,8 @@ class Sher_Core_ViewTag_CategoryList extends Doggy_Dt_Tag {
         $pid = 0;
 		$only_open = 0;
         $gid = 0;
+        // 分类名称
+        $q = '';
 		
 		$show_all = 0;
 		$current = 0;
@@ -43,6 +45,11 @@ class Sher_Core_ViewTag_CategoryList extends Doggy_Dt_Tag {
         // 获取顶级分类
         if($istop){
             $query['pid'] = 0;
+        }
+        // 分类名称
+        $q = trim($q);
+        if(!empty($q)){
+            $query['title'] = array('$regex'=>$q, '$options'=>'i');
         }
 
         //获取 子分类

@@ -7,7 +7,7 @@ class Sher_Admin_Action_Category extends Sher_Admin_Action_Base implements Doggy
 	
 	public $stash = array(
 		'page' => 1,
-		'size' => 20,
+		'size' => 100,
 		'only_open' => 0,
 	);
 	
@@ -34,8 +34,7 @@ class Sher_Admin_Action_Category extends Sher_Admin_Action_Base implements Doggy
 		} else {
 			$this->set_target_css_state('all_category');
 		}
-		
-		
+        
 		return $this->to_html_page('admin/category/list.html');
 	}
 	
@@ -64,8 +63,8 @@ class Sher_Admin_Action_Category extends Sher_Admin_Action_Base implements Doggy
 	 */
 	public function save() {
 		// 验证数据
-		if(empty($this->stash['name']) || empty($this->stash['title'])){
-			return $this->ajax_note('分类标识或标题不能为空！', true);
+		if(empty($this->stash['title'])){
+			return $this->ajax_note('分类标题不能为空！', true);
 		}
         
 		$category = new Sher_Core_Model_Category();

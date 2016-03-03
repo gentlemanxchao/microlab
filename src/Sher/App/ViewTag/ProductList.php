@@ -72,9 +72,13 @@ class Sher_App_ViewTag_ProductList extends Doggy_Dt_Tag {
         if ($user_id) {
             $query['user_id'] = (int)$user_id;
         }
-		
-		if ($category_id) {
-			$query['category_id'] = (int)$category_id;
+        
+		if (!empty($category_id)) {
+            if (is_array($category_id)){
+                $query['category_id'] = array('$in'=>$category_id);
+            }else{
+                $query['category_id'] = (int)$category_id;
+            }
 		}
 		
 		if ($published) {

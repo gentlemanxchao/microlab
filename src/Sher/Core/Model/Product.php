@@ -34,7 +34,7 @@ class Sher_Core_Model_Product extends Sher_Core_Model_Base {
 		'asset_count' => 0,
 		
 		# 类别支持多选
-		'category_id' => 0,
+		'category_id' => array(),
 		
 		# 上传者
 		'user_id' => null,
@@ -94,13 +94,12 @@ class Sher_Core_Model_Product extends Sher_Core_Model_Base {
     );
 	
 	protected $required_fields = array('user_id','title');
-	protected $int_fields = array('user_id','category_id','inventory','sale_count', 'published');
+	protected $int_fields = array('user_id','inventory','sale_count', 'published');
 	protected $float_fields = array('cost_price', 'market_price', 'sale_price');
 	protected $counter_fields = array('inventory','sale_count','asset_count', 'view_count', 'love_count', 'comment_count');
 	protected $retrieve_fields = array('content'=>0);
 	protected $joins = array(
 	    'cover' => array('cover_id' => 'Sher_Core_Model_Asset'),
-		'category' => array('category_id' => 'Sher_Core_Model_Category'),
 	);
 	
 	/**
@@ -116,6 +115,7 @@ class Sher_Core_Model_Product extends Sher_Core_Model_Base {
         $row['comment_view_url'] = sprintf(Doggy_Config::$vars['app.url.shop'].'/view/%d/%d', $row['_id'], 1);
 		
 		$row['tags_s'] = !empty($row['tags']) ? implode(',',$row['tags']) : '';
+        $row['category_id_s'] = !empty($row['category_id']) ? implode(',', $row['category_id']) : '';
 		
 		// HTML 实体转换为字符
 		if (isset($row['content'])){
@@ -155,7 +155,13 @@ class Sher_Core_Model_Product extends Sher_Core_Model_Base {
 	    if (isset($data['tags']) && !is_array($data['tags'])) {
 	        $data['tags'] = array_values(array_unique(preg_split('/[,，\s]+/u',$data['tags'])));
 	    }
-
+        // 转换数组
+	    if (isset($data['category_id']) && is_array($data['category_id'])) {
+            for($i=0;$i<count($data['category_id']);$i++) {
+                $data['category_id'][$i] = (int)$data['category_id'][$i];
+            }
+	    }
+        
         // 库存数量不为能负数
         if(isset($data['inventory']) && (int)$data['inventory'] < 0){
             $data['inventory'] = 0;

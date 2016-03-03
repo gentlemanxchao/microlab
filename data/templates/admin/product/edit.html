@@ -14,6 +14,15 @@
         .ui.link.active {
             color: rgb(255, 51, 102);
         }
+        .category {
+            border: 1px dashed rgba(34, 36, 38, 0.15);
+            border-radius: 4px;
+            margin-top: 10px;
+            padding: 5px;
+        }
+        .category p {
+            margin-bottom: 5px;
+        }
     </style>
 {% endblock %}
 
@@ -178,7 +187,7 @@
 		{% if mode == 'edit' %}
 		defaultImageTitle: '{{ product.title }}',
 		{% else %}
-		defaultImageTitle: '太火鸟',
+		defaultImageTitle: '麦博',
 		{% endif %}
 		buttons: ["bold", "italic", "underline","strikeThrough", "fontSize", "color", "sep", "align", "insertOrderedList", "insertUnorderedList", "outdent", "indent", "sep", "createLink", "insertImage", "insertVideo", "insertHorizontalRule", "undo", "redo", "selectAll", "html", "fullscreen"],
 		imageUploadURL: "{{ app_url_upload_pictures }}",
@@ -255,17 +264,18 @@
 	
 	<div class="ui secondary pointing magenta menu">
 		<a href="{{ app_url_admin_base }}/product" class="item">
-			全部
+			全部列表
 		</a>
 	  	<div class="right menu">
 			{% if mode == 'edit' %}
 			<div class="active item">
 				<i class="edit icon"></i>编辑产品
 			</div>
-			{% endif %}		
-			<a href="{{ app_url_admin_base }}/product/edit" class="item">
+            {% else %}
+			<a href="{{ app_url_admin_base }}/product/edit" class="active item">
 				<i class="add icon"></i>新增产品
 			</a>
+			{% endif %}		
 	    </div>
 	</div>
 	
@@ -278,13 +288,6 @@
 			<div class="field">
 				<label>产品名称</label>
 			  	<input type="text" name="title" value="{{ product.title }}" />
-			</div>
-			<div class="field">
-				<label>简短名称</label>
-			  	<input type="text" name="short_title" value="{{ product.short_title }}" />
-				<div class="ui pointing top label">
-					简短名称用于移动端显示
-				</div>
 			</div>
 			<div class="field">
 				<label>产品亮点</label>
@@ -320,11 +323,19 @@
 			<h4 class="ui dividing header">选择分类</h4>
 			<div class="grouped inline fields">
                 <div class="field">
-                    <label>分类:</label>
-                    <input type="hidden" name="category_id" value="{{ product.category_id }}" id="product-category" />
-                    {% category_list var:'category' only_open:1 domain:1 current:product.category_id %}
+                    {% category_list var:'category' domain:1 istop:1 current:product.category_id size:100 %}
+                    
                     {% for cat in category.rows %}
-                    <a class="ui {{ cat.active }} category button" style="margin-bottom:2px;" data-value="{{ cat._id }}">{{ cat.title }}</a>
+                    <div class="category">
+                        <p>{{ cat.group.name }} / {{ cat.title }}</p>
+        				{% category_list var:'children' page:1 size:100 pid:cat._id current:product.category_id %}
+        				{% for child in children.rows %}
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="category_id[]" value="{{ child._id }}" {% if child.active %}checked="checked"{% endif %} >
+                            <label>{{ child.title }}</label>
+                        </div>
+                        {% endfor %}
+        			</div>	
                     {% endfor %}
                 </div>
             </div>
@@ -427,13 +438,13 @@
 			</div>
         </div>
 	    
-		<div class="ui right aligned grid">
+		<div class="ui grid">
 			<div class="column">
-				<div class="ui large green cancel inverted button">
-					取消
-				</div>
 				<div class="ui large red submit inverted button">
 					确认提交
+				</div>
+				<div class="ui large grey cancel inverted button">
+					取消
 				</div>
 			</div>
 		</div>

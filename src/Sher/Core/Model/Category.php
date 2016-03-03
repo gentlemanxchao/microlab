@@ -58,7 +58,7 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	
     protected $int_fields = array('gid','pid','order_by','domain','is_open','total_count','state','reply_count');
 
-	protected $required_fields = array('name','title');
+	protected $required_fields = array('title');
 	
     protected $joins = array();
 	
@@ -101,17 +101,6 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 		
 		return $this->find($query);
 	}
-	
-	/**
-	 * 验证字段
-	 */
-    protected function validate(){
-		if(!$this->check_only_name()){
-			throw new Sher_Core_Model_Exception('分类标识已被占用！');
-		}
-		
-        return true;
-    }
 	
 	/**
 	 * 保存之前,处理标签中的逗号,空格等

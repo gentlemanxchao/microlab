@@ -1,19 +1,7 @@
 {%extends 'layout/admin.html'%}
-{% block page_css %}
-{% endblock %}
-{% block js %}
-{% endblock %}
+
 {% block jquery %}
 	$('#category-form').form({
-		name: {
-			identifier  : 'name',
-			rules: [
-				{
-					type   : 'empty',
-					prompt : '分类标识不能为空'
-				}
-			]
-		},
 		title: {
 			identifier  : 'title',
 			rules: [
@@ -55,10 +43,6 @@
 		
 		<form action="{{ app_url_admin_base }}/category/save" class="ajax-form" method="post" id="category-form">
 			<input type="hidden" name="_id" value="{{ category._id }}" id="target_id" />
-			<div class="inline field">
-			  	<label for="name">分类标识：</label>
-				<input type="text" name="name" value="{{ category.name }}" />
-			</div>
 			<div class="inline field">
 			  	<label for="title">分类名称：</label>
 				<input type="text" name="title" value="{{ category.title }}" />
@@ -108,20 +92,21 @@
 						<label></label> 
 			      	</div>
 			      	<label class="checkbox title">公开</label>
+                    
 			      	<div class="ui radio checkbox">
 			        	<input type="radio" name="is_open" value="-1" {% if category.is_open < 1 %}checked="checked"{% endif %} /> 
 			        	<label></label>
 			      	</div>
 			      	<label class="checkbox title">隐藏</label>
 			    </div>
-			    <div class="field">
-			      	
-			    </div>
 			</div>
 			
 			<div class="field">
 			  	<label for="tags">封面图片：</label>
 				<input type="text" name="cover" value="{{ category.cover }}" />
+				<div class="ui pointing top label">
+					为优化上传管理,请从附件管理里上传，复制图片地址填充即可！
+				</div>
 			</div>
             
 			<div class="inline field">
