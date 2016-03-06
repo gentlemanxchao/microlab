@@ -32,7 +32,7 @@
 {% block content %}
 	<h3 class="ui header">分类管理</h3>
 	
-	<div class="ui secondary pointing magenta menu">
+	<div class="ui secondary pointing magenta clearfix menu">
 		<a href="{{ app_url_admin_base }}/category" class="{{css_all_category}} item">全部列表</a>
 		<a href="{{ app_url_admin_base }}/category?only_open=1" class="{{css_open_category}} item">公开列表</a>
 		<a href="{{ app_url_admin_base }}/category?only_open=-1" class="{{css_hide_category}} item">隐藏列表</a>
