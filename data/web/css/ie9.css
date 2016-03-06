@@ -15,6 +15,13 @@
     width: 150px !important;
 }
 
+.login.box {
+    width: 600px !important;
+}
+.ui.grid > .row > .four.wide.column {
+    width: 25% !important;
+}
+
 .footer .ui.grid .row .column {
     width: 19.5% !important;
 }
