@@ -10,13 +10,13 @@ body,
     padding: 0.25rem 0rem;
 }
 
-.ui.menu .img.item {
-    padding-top: 0rem !important;
+.ui.secondary.pointing.menu .img.item {
+    padding-top: 0rem;
     padding-bottom: 0.65rem !important;
     padding-right: 3rem !important;
 }
-.ui.menu .icon.item {
-    padding-top: 0rem !important;
+.ui.secondary.pointing.menu .icon.item {
+    padding-top: 0rem;
     padding-bottom: 0.5rem !important;
 }
 
@@ -656,7 +656,7 @@ a,.ui.breadcrumb a {
 /**
  * Note: the root picker element should *NOT* be styled more than what’s here.
  */
-/**
+/*
  * Make the holder and frame fullscreen.
  */
 .picker__holder,

@@ -1,17 +1,19 @@
-.ui.menu .item {
+.ui.secondary.pointing.menu .item {
     color: #ffffff !important;
     padding: 0.857143em 1.14286em;
     display: inline-block;
     font-size: 16px !important;
     float: left;
 }
-.ui.menu .img.item {
+.ui.secondary.pointing.menu .img.item {
     width: 190px !important;
+    padding-top: 0.85em !important;
 }
-.ui.menu .icon.item {
+.ui.secondary.pointing.menu .icon.item {
     width: 40px !important;
+    padding-top: 0.85em !important;
 }
-.ui.menu .right.menu {
+.ui.secondary.pointing.menu .right.menu {
     float: right;
     width: 150px !important;
 }
