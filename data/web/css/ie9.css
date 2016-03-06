@@ -31,10 +31,10 @@
 
 
 .ui.three.cards > .card {
-    width: 30.3333%;
+    width: 360px;
     float: left;
     overflow: hidden;
-    margin: 15px 15px 15px 0px;
+    margin: 15px 20px 15px 0px;
     border: 1px solid rgb(212, 212, 213);
 }
 .ui.cards > .card > .image > img {
