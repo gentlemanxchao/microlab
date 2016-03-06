@@ -1,3 +1,12 @@
+.clearfix:after {
+    content: "."; 
+    display: block;
+    clear: both; 
+    visibility: hidden;
+    line-height: 0; 
+    height: 0;
+}
+.clearfix {display: inline-table; +display:inline-block;}/* Hides from IE-mac \*/* html .clearfix {height: 1%;}.clearfix {display: block;}
 .ui.secondary.pointing.menu .item {
     color: #ffffff !important;
     padding: 0.857143em 1.14286em;
@@ -58,6 +67,9 @@
 }
 .ui.table {
     width: 100% !important;
+}
+.ui.table td {
+    padding: 12px 0px;
 }
 .adminbd .ui.vertical.menu {
     border: 1px solid rgba(34, 36, 38, 0.15)
