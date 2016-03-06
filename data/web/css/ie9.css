@@ -40,3 +40,15 @@
 .ui.cards > .card > .image > img {
     width: 100% !important;
 }
+
+.ui.pagination.menu .item {
+    display: inline-block;
+    font-size: 16px !important;
+    float: left;
+    line-height: 1;
+    padding: 0.928571em 1.14286em;
+}
+.ui.pagination.menu .icon.item {
+    padding-bottom: 0.5rem !important;
+    padding-top: 0rem !important;
+}
