@@ -1,3 +1,17 @@
+.ui.menu .item {
+    color: #ffffff !important;
+    display: inline-block;
+}
+.ui.menu .img.item {
+    width: 160px !important;
+}
+.ui.menu .icon.item {
+    width: 40px !important;
+}
+.ui.menu .right.item {
+    float: right;
+}
+
 .footer .ui.grid .row .column {
     width: 19.5% !important;
 }
