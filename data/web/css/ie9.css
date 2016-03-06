@@ -78,6 +78,16 @@
     padding: 0.928571em 1.14286em;
     display: block;
 }
+.adminbd .ui.secondary.pointing.magenta.menu .item {
+    color: #333333;
+}
+.adminbd .ui.secondary.pointing.magenta.menu .right.menu {
+    width: 300px !important;
+}
+.adminbd .ui.secondary.pointing.magenta.menu .right.menu .item {
+    width: 100px !important;
+    color: #333333;
+}
 
 .ui.three.cards > .card {
     width: 360px;
