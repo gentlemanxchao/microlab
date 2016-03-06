@@ -1,5 +1,6 @@
 .ui.menu .item {
     color: #ffffff !important;
+    padding: 0.857143em 1.14286em;
     display: inline-block;
 }
 .ui.menu .img.item {
@@ -10,6 +11,7 @@
 }
 .ui.menu .right.item {
     float: right;
+    width: 150px !important;
 }
 
 .footer .ui.grid .row .column {
