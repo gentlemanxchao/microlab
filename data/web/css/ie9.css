@@ -78,8 +78,11 @@
     padding: 0.928571em 1.14286em;
     display: block;
 }
+.adminbd .ui.secondary.pointing.magenta.menu {
+    border: 1px solid #ccc;
+}
 .adminbd .ui.secondary.pointing.magenta.menu .item {
-    color: #333333;
+    color: #333333 !important;
 }
 .adminbd .ui.secondary.pointing.magenta.menu .right.menu {
     width: 300px !important;
@@ -87,7 +90,36 @@
 .adminbd .ui.secondary.pointing.magenta.menu .right.menu .item {
     width: 100px !important;
     color: #333333;
+    padding-right: 3px !important;
+    padding-left: 3px !important;
 }
+
+.ui.selection.dropdown {
+    background: rgb(255, 255, 255) none repeat scroll 0 0;
+    border: 1px solid rgb(34, 36, 38);
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1em;
+    min-height: 2.7142em;
+    min-width: 14em;
+    outline: 0 none;
+    padding: 0.785714em 2.6em 0.785714em 1em;
+    white-space: normal;
+    word-wrap: break-word;
+}
+.ui.dropdown .menu > .item {
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    display: block;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1em;
+    padding: 0.714286rem 1.14286rem !important;
+    position: relative;
+    text-align: left;
+}
+
 
 .ui.three.cards > .card {
     width: 360px;
