@@ -65,10 +65,10 @@
 {% endif %}
 
 <div class="shoplist">
+    {% product_list var:'products' category_id:query_category_id page:page size:12 %}
     <div class="ui responsive grid">
         <div class="row">
             <div class="column">
-                {% product_list var:'products' category_id:query_category_id page:page size:12 %}
                 {% if products.rows %}
                 <div class="ui three cards">
                     {% for product in products.rows %}

@@ -39,6 +39,8 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
      */
     public function speaker() {
         $this->stash['gid'] = 1601;
+		$pager_url = Doggy_Config::$vars['app.url.shop'].'/speaker?category_id=%d&page=#p#';
+		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['category_id']);
         return $this->_display_tab_list('speaker');
     }
     
@@ -47,6 +49,8 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
      */
     public function headset() {
         $this->stash['gid'] = 1602;
+		$pager_url = Doggy_Config::$vars['app.url.shop'].'/headset?category_id=%d&page=#p#';
+		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['category_id']);
         return $this->_display_tab_list('headset');
     }
     
@@ -55,6 +59,8 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
      */
     public function wireless() {
         $this->stash['gid'] = 1603;
+		$pager_url = Doggy_Config::$vars['app.url.shop'].'/wireless?category_id=%d&page=#p#';
+		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['category_id']);
         return $this->_display_tab_list('wireless');
     }
     
@@ -63,6 +69,8 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
      */
     public function hifi() {
         $this->stash['gid'] = 1604;
+		$pager_url = Doggy_Config::$vars['app.url.shop'].'/hifi?category_id=%d&page=#p#';
+		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['category_id']);
         return $this->_display_tab_list('hifi');
     }
     
