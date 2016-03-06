@@ -11,7 +11,7 @@
 }
 .ui.secondary.pointing.menu .icon.item {
     width: 40px !important;
-    padding-top: 0.85em !important;
+    padding-top: 0.95em !important;
 }
 .ui.secondary.pointing.menu .right.menu {
     float: right;
@@ -27,4 +27,11 @@
 
 .footer .ui.grid .row .column {
     width: 19.5% !important;
+}
+
+
+.ui.three.cards > .card {
+    width: 30.3333%;
+    float: left;
+    border: 1px solid rgb(212, 212, 213);
 }
