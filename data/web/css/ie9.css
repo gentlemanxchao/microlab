@@ -3,6 +3,7 @@
     padding: 0.857143em 1.14286em;
     display: inline-block;
     font-size: 16px !important;
+    float: left;
 }
 .ui.menu .img.item {
     width: 190px !important;
