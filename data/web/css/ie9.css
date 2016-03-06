@@ -2,14 +2,15 @@
     color: #ffffff !important;
     padding: 0.857143em 1.14286em;
     display: inline-block;
+    font-size: 16px !important;
 }
 .ui.menu .img.item {
-    width: 160px !important;
+    width: 190px !important;
 }
 .ui.menu .icon.item {
     width: 40px !important;
 }
-.ui.menu .right.item {
+.ui.menu .right.menu {
     float: right;
     width: 150px !important;
 }
