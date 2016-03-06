@@ -56,6 +56,9 @@
 .ui.grid > .row > .twelve.wide.column {
     width: 74.5% !important;
 }
+.ui.grid .right.aligned.column {
+    text-align: right;
+}
 
 .footer .ui.grid .row .column {
     width: 19.5% !important;
@@ -121,8 +124,8 @@
 }
 
 
-.ui.three.cards > .card {
-    width: 360px;
+.ui.cards > .card {
+    width: 200px;
     float: left;
     overflow: hidden;
     margin: 15px 20px 15px 0px;
@@ -131,7 +134,12 @@
 .ui.cards > .card > .image > img {
     width: 100% !important;
 }
-
+.ui.three.cards > .card {
+    width: 360px;
+}
+.ui.four.cards > .card {
+    width: 260px;
+}
 .ui.pagination.menu .item {
     display: inline-block;
     font-size: 16px !important;
