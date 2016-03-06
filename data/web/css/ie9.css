@@ -59,6 +59,15 @@
 .ui.grid .right.aligned.column {
     text-align: right;
 }
+.ui.grid .four.column.row .column {
+    width: 24.5% !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.ui.grid .four.column.row .column .xitem {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
 
 .footer .ui.grid .row .column {
     width: 19.5% !important;
