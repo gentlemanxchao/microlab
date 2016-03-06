@@ -29,11 +29,11 @@
 {% block content %}
 <div class="topiccate">
     <div class="ui responsive grid">
-        <div class="two column row">
-            <div class="column">
+        <div class="row">
+            <div class="four wide column">
                 <h4 class="ui header">新闻中心</h4>
             </div>
-            <div class="right aligned column">
+            <div class="twelve wide right aligned column">
                 <div class="ui horizontal list">
                     {% for g in groups %}
                     <a href="{{ app_url_action_base }}/topic?cid={{ g.id }}" class="{% if g.id == cid %}active{% endif %} item">{{ g.name }}</a>
