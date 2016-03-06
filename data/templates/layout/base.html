@@ -12,6 +12,9 @@
 		{%endblock%}
         <title>{% block title %}{% endblock %}{%if page_title_suffix%}{{page_title_suffix}}{%else%}麦博{%endif%}</title>
 		<link rel="shortcut icon" href="/favicon.ico" />
+        <!--[if lte IE 9]>
+          <link rel="stylesheet" href="{{ app_url_domain }}/css/ie9.css" type="text/css" />
+        <![endif]-->
         <link rel="stylesheet" href="{{ app_url_domain }}/dist/semantic.css" type="text/css" />
         <link rel="stylesheet" href="{{ app_url_domain }}/css/resp.css" type="text/css" />
         <link rel="stylesheet" href="{{ app_url_domain }}/css/flexslider.css" type="text/css" />
