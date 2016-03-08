@@ -99,15 +99,15 @@ class Sher_Core_Model_Topic extends Sher_Core_Model_Base {
 	protected $groups = array(
 		array(
 			'id' => 1701,
-			'name' => '新闻剪辑',
+			'name' => '媒体报道',
 		),
 		array(
 			'id' => 1702,
-			'name' => '新品追踪',
+			'name' => '新品动态',
 		),
 		array(
 			'id' => 1703,
-			'name' => '市场活动',
+			'name' => '麦乐汇',
 		),
 	);
     

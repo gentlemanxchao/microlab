@@ -40,7 +40,7 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	protected $groups = array(
 		array(
 			'id' => 1601,
-			'name' => '音箱',
+			'name' => '音响',
 		),
 		array(
 			'id' => 1602,

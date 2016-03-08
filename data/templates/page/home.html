@@ -5,15 +5,24 @@
     .flexslider .slides li {
         min-height: 500px;
     }
+    .flexslider .slides li a {
+        display: inline-block;
+        width: 100%;
+        height: 500px;
+    }
+    .flex-control-nav {
+        bottom: -27px;
+    }
 </style>
 {% endblock %}
 
 {% block jquery %}
     $("#slider").flexslider({
         animation: "slide",
-        controlNav: false,
+        controlNav: true,
         animationLoop: true,
-        slideshow: false,
+        slideshow: true,
+        slideshowSpeed: 5000,
     }); 
 {% endblock %}
 
@@ -22,7 +31,7 @@
     <div class="ui responsive grid">
         <div class="row">
             <div class="column">
-                {% ad_list var:'adslide' page:1 size:4 state:2 name:'index_slide' %}
+                {% ad_list var:'adslide' page:1 size:5 state:2 name:'index_slide' %}
                 <div id="slider" class="flexslider"> 
                     <ul class="slides"> 
     	                {% for ad in adslide.rows %}

@@ -32,7 +32,7 @@ class Sher_App_ViewTag_SearchList extends Doggy_Dt_Tag {
         
         // 模糊查询
         if ($search_word) {
-            $query['title'] = array('$regex'=>$search_word);
+            $query['title'] = array('$regex'=>new MongoRegex("/^$search_word/i"));
         } else {
             $context->set($var, array());
             return;

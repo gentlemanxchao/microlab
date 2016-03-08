@@ -7,21 +7,42 @@
     padding-bottom: 30px;
     margin: 0px auto 15px;
 }
-.shopcate .ui.list > .item > .image {
+.flexslider {
+    background-color: rgb(247, 247, 247);
+}
+#carousel li .image {
     display: inline-block;
     overflow: hidden;
     width: 240px;
     max-height: 100px;
 }
-.shopcate .ui.list > .item > .catitle {
+#carousel li .catitle {
     margin-top: 10px;
 }
+#carousel li .catitle a.active {
+    color: rgb(214, 84, 84);
+}
+
 .active.category {
     color: #222;
     border-bottom: 2px solid #222;
     padding-bottom: 5px;
 }
 </style>
+{% endblock %}
+
+{% block jquery %}
+    
+    $('#carousel').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 240,
+        itemMargin: 10,
+        move: 3,
+    });
+
 {% endblock %}
 
 {% block content %}
@@ -32,17 +53,19 @@
     <div class="ui responsive grid">
         <div class="row">
             <div class="center aligned column">
-                <div class="ui horizontal list">
-                    {% for cat in list.rows %}
-                    <div class="{{ cat.active }} item">
-                        <a href="{{ cat.view_url }}" class="image">
-                            <img src="{{ cat.cover }}" />
-                        </a>
-                        <p class="catitle">
-                            <a href="{{ cat.view_url }}" class="{{ cat.active }}">{{ cat.title }}</a>
-                        </p>
-                    </div>
-                    {% endfor %}
+                <div id="carousel" class="flexslider">
+                    <ul class="slides">
+						{% for cat in list.rows %}
+                            <li>
+                                <a href="{{ cat.view_url }}" class="image">
+                                    <img src="{{ cat.cover }}" />
+                                </a>
+                                <p class="catitle">
+                                    <a href="{{ cat.view_url }}" class="{{ cat.active }}">{{ cat.title }}</a>
+                                </p>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
