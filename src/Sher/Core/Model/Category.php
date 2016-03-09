@@ -111,7 +111,8 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
 	    }
         // 检查子分类与父分类，所属组是否一致
         if (!empty($data['pid'])) {
-            $parent = $this->load((int)$data['pid']);
+            $model = new Sher_Core_Model_Category();
+            $parent = $model->load((int)$data['pid']);
             // 强制保持一致
             if ($data['gid'] != $parent['gid']) {
                 $data['gid'] = $parent['gid'];
@@ -119,6 +120,7 @@ class Sher_Core_Model_Category extends Sher_Core_Model_Base {
         }
         
 	    $data['updated_on'] = time();
+        
 	    parent::before_save($data);
 	}
 	

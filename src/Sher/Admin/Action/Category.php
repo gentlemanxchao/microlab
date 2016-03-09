@@ -81,8 +81,6 @@ class Sher_Admin_Action_Category extends Sher_Admin_Action_Base implements Doggy
 				return $this->ajax_note('分类保存失败,请重新提交', true);
 			}
 			
-			$this->stash['target'] = $category->extend_load();
-			
 		}catch(Sher_Core_Model_Exception $e){
 			return $this->ajax_note('分类保存失败:'.$e->getMessage(), true);
 		}
