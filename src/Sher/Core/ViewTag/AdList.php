@@ -25,8 +25,8 @@ class Sher_Core_ViewTag_AdList extends Doggy_Dt_Tag {
         $var = 'list';
         $include_pager = 0;
         $pager_var = 'pager';
-		$sort_field = 'ordby:updated';
-
+		$sort_field = 'ordby';
+        
         extract($this->resolve_args($context, $this->argstring, EXTR_IF_EXISTS));
 
         $page = (int) $page;

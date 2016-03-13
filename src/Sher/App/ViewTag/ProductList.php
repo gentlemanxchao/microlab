@@ -24,6 +24,8 @@ class Sher_App_ViewTag_ProductList extends Doggy_Dt_Tag {
 		// 多个产品
 		$product_ids = array();
 		$sku = 0;
+        $s_type = 0;
+        $s_mark = 0;
         
 		$category_id = 0;
         $user_id = 0;
@@ -45,7 +47,7 @@ class Sher_App_ViewTag_ProductList extends Doggy_Dt_Tag {
         $size = (int)$size;
 		
         $query = array();
-		
+        
 		// 获取单个产品
 		if ($product_id) {
 			$result = DoggyX_Model_Mapper::load_model((int)$product_id, 'Sher_Core_Model_Product');
@@ -84,6 +86,22 @@ class Sher_App_ViewTag_ProductList extends Doggy_Dt_Tag {
 		if ($published) {
 			$query['published'] = (int)$published;
 		}
+        
+        // 搜索
+        if ($s_mark && $s_type) {
+            $words = Sher_Core_Service_Search::instance()->check_query_string($s_mark);
+            switch ($s_type) {
+                case 1:
+                    $query['_id'] = (int)$s_mark;
+                    break;
+                case 2:
+                    $query['title'] = array('$regex'=>new MongoRegex("/^$s_mark/i"));
+                    break;
+                case 3:
+                    $query['tags'] = array('$all'=>$words);
+                    break;
+            }
+        }
 		
         $service = Sher_Core_Service_Product::instance();
         $options['page'] = $page;

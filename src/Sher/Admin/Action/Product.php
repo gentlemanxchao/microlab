@@ -311,16 +311,15 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 	 * 更新发布上线
 	 */
 	public function update_onsale(){
-		$ids = (int)$this->stash['id'];
-		if(empty($ids)){
+		$id = $this->stash['id'];
+		if(empty($id)){
 			return $this->ajax_notification('缺少Id参数！', true);
 		}
 		
 		$model = new Sher_Core_Model_Product();
-		$ids = array_values(array_unique(preg_split('/[,，\s]+/u',$ids)));
-		
-		foreach($ids as $id){
-			$model->mark_as_published($id);
+		$ids = array_values(array_unique(preg_split('/[-]+/u',$id)));
+		foreach($ids as $pid){
+			$model->mark_as_published($pid);
 		}
 		
         $this->stash['ids']  = $ids;
@@ -338,7 +337,7 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 		}
 		
 		$model = new Sher_Core_Model_Product();
-		$ids = array_values(array_unique(preg_split('/[,，\s]+/u',$ids)));
+		$ids = array_values(array_unique(preg_split('/[-]+/u',$ids)));
 		
 		foreach($ids as $id){
 			$model->mark_as_published($id, 1);
@@ -477,19 +476,8 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
         $this->set_target_css_state('page_product');
         $this->stash['is_search'] = true;
 		
-		$pager_url = Doggy_Config::$vars['app.url.admin'].'/product/search?stage=%d&s=%d&q=%s&page=#p#';
-		switch($this->stash['stage']){
-			case 9:
-				$this->stash['process_saled'] = 1;
-				break;
-			case 5:
-				$this->stash['process_presaled'] = 1;
-				break;
-			case 1:
-				$this->stash['process_voted'] = 1;
-				break;
-		}
-		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['stage'], $this->stash['s'], $this->stash['q']);
+		$pager_url = Doggy_Config::$vars['app.url.admin'].'/product/search?s=%d&q=%s&page=#p#';
+		$this->stash['pager_url'] = sprintf($pager_url, $this->stash['s'], $this->stash['q']);
         return $this->to_html_page('admin/product/list.html');
   
     }

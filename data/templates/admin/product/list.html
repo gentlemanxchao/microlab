@@ -3,6 +3,20 @@
 {% endblock %}
 
 {% block jquery %}
+
+    $('#select_all').bind('click', function(){
+        if ($(this).hasClass('checked')){
+    		$('input.checkbox').each(function(){
+    			this.checked = "checked";
+    		});
+        } else {
+    		$('input.checkbox').each(function(){
+    			this.checked = "";
+    		});
+        }
+        return false;
+    });
+    
 	// 发布上架
 	$('.item.publish-onsale').bind('click', function(){
 		var selected_ids = [];
@@ -17,7 +31,7 @@
 		}
 		
 		var url = $(this).attr('href');
-		$.get(url, {id: selected_ids.join(',')});
+		$.post(url, {id: selected_ids.join('-')});
 		
 		return false;
 	});
@@ -63,15 +77,11 @@
 	    	<a href="{{ app_url_admin_base }}/product/update_onsale" class="item publish-onsale">
 				<i class="check icon"></i> 发布上线
 			</a>
-			<a href="{{ app_url_admin }}/product/deleted" class="item ajax-delete">
-				<i class="remove icon"></i> 批量删除
-			</a>
 	    </div>
 	</div>
 	
 	<div class="ui sub nav">
 		<form action="{{ app_url_admin_base }}/product/search" method="get">
-            <input type="hidden" name="stage" value="{{ stage }}" />
 			<label>搜索：</label>
             <div class="ui selection dropdown">
                 <input type="hidden" name="s" value="{{ s }}" />
@@ -95,7 +105,7 @@
 		<thead>
 			<tr>
 				<th>
-					<div class="ui checkbox">
+					<div class="ui checkbox" id="select_all">
 					  	<input name="ids" type="checkbox" />
 					  	<label></label>
 					</div>
@@ -118,7 +128,7 @@
 			<tr id="{{ product._id }}">
 				<td>
 					<div class="ui checkbox">
-					  	<input name="ids" type="checkbox" value="{{ product._id }}" class="checkbox" />
+					  	<input name="ids[]" type="checkbox" value="{{ product._id }}" class="checkbox" />
 					  	<label></label>
 					</div>
 				</td>
@@ -160,13 +170,13 @@
 						</a>
 						{% endif %}
 						
-						{% if !product.published %}
-			          	<a href="{{ app_url_admin }}/product/update_onsale?id={{ product._id }}" class="ui ajax link item">
-							发布
-						</a>
-						{% else %}
+						{% if product.published == 2 %}
 			          	<a href="{{ app_url_admin }}/product/update_offline?id={{ product._id }}" class="ui ajax link item">
 							下架
+						</a>
+						{% else %}
+			          	<a href="{{ app_url_admin }}/product/update_onsale?id={{ product._id }}" class="ui ajax link item">
+							发布
 						</a>
 						{% endif %}
 					</p>

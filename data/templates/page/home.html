@@ -3,16 +3,45 @@
 {% block page_css %}
 <style type="text/css">
     .flexslider .slides li {
-        min-height: 500px;
+        height: 500px;
     }
     .flexslider .slides li a {
         display: inline-block;
         width: 100%;
         height: 500px;
+        overflow: hidden;
     }
     .flex-control-nav {
         bottom: -27px;
     }
+    
+    .flex-direction-nav a {
+        height: 500px;
+        width: 50px;
+        top: 0;
+        margin: 0;
+   }
+   .flex-direction-nav a::before {
+       font-size: 36px;
+       color: #fff;
+       position: relative;
+       top: 210px;
+   }
+   .flex-direction-nav a.flex-prev {
+       left: -50px;
+       text-align: center;
+   }
+   .flex-direction-nav a.flex-next {
+       right: -50px;
+       text-align: center;
+   }
+   .flexslider:hover .flex-direction-nav a.flex-prev {
+       left: 0;
+   }
+   .flexslider:hover .flex-direction-nav a.flex-next {
+       right: 0;
+   }
+   
 </style>
 {% endblock %}
 
@@ -22,7 +51,9 @@
         controlNav: true,
         animationLoop: true,
         slideshow: true,
-        slideshowSpeed: 5000,
+        slideshowSpeed: 500000,
+        prevText: "",
+        nextText: "",
     }); 
 {% endblock %}
 
@@ -36,8 +67,8 @@
                     <ul class="slides"> 
     	                {% for ad in adslide.rows %}
                             <li style="background-image: url('{{ ad.cover.fileurl }}');">
-                                <a href="{{ ad.view_url }}" title="{{ ad.title }}" alt="{{ ad.title }}" target="_blank">
-                                    <img src="{{ ad.cover.fileurl }}" alt="{{ ad.title }}" style="display: none;" />
+                                <a href="{{ ad.view_url }}" target="_blank">
+                                    <img src="{{ ad.cover.fileurl }}" style="display: none;" />
                                 </a>
                             </li>
     					{% endfor %}
@@ -45,26 +76,14 @@
                 </div>
                 
                 <div class="ui four blocks">
+                    {% ad_list var:'stickslide' page:1 size:4 state:2 name:'index_stick' %}
+                    {% for sd in stickslide.rows %}
                     <div class="block">
-                        <a href="#" title="CES">
-                            <img src="/images/sk-product-t8.jpg" alt="CES" />
+                        <a href="{{ sd.view_url }}">
+                            <img src="{{ sd.cover.fileurl }}" />
                         </a>
                     </div>
-                    <div class="block">
-                        <a href="#" title="FC50">
-                            <img src="/images/sk-product-fc50.jpg" alt="FC50" />
-                        </a>
-                    </div>
-                    <div class="block">
-                        <a href="#" title="MD213">
-                            <img src="/images/sk-product-md213.jpg" alt="MD213" />
-                        </a>
-                    </div>
-                    <div class="block">
-                        <a href="#" title="FC360">
-                            <img src="/images/sk-product-fc360.jpg" alt="FC360" />
-                        </a>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
