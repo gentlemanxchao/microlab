@@ -138,22 +138,22 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
         switch($gid){
             case 1601:
                 $tab_lab = 'speaker';
-                $gtitle = '全部音箱';
+                $gtitle = '音响';
                 break;
             case 1602:
                 $tab_lab = 'headset';
-                $gtitle = '全部耳机';
+                $gtitle = '耳机';
                 break;
             case 1603:
                 $tab_lab = 'wireless';
                 break;
             case 1604:
                 $tab_lab = 'hifi';
-                $gtitle = '全部玄道HIFI';
+                $gtitle = '玄道HIFI';
                 break;
             default:
                 $tab_lab = 'speaker';
-                $gtitle = '全部音箱';
+                $gtitle = '音响';
                 break;
         }
         $this->set_target_css_state('page_'.$tab_lab);

@@ -58,7 +58,7 @@
         <div class="row">
             <div class="center aligned column">
                 {% if !current_category.pid %}
-				<div class="ui white button">{{ gtitle}} {% if current_category %} / {{ current_category.title }}{% endif %}</div>
+				<div class="ui white button">{{ gtitle}} {% if current_category %} / {{ current_category.title }} {% else %} / 全部{% endif %}</div>
                 {% else %}
                 <div class="ui white button">{{ gtitle}} / {{ parent_category.title }} / {{ current_category.title }}</div>
                 {% endif %}
