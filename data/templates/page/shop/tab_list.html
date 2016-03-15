@@ -2,10 +2,13 @@
 
 {% block page_css %}
 <style type="text/css">
-.shopcate {
-    background-color: #f7f7f7;
-    padding-bottom: 30px;
-    margin: 0px auto 15px;
+.shopcate.banner {
+	color: white;
+	padding: 60px 0;
+	background: url("/images/prize-bg.jpg") no-repeat scroll center center / cover rgba(56, 67, 77, 0.9);
+}
+.ui.horizontal.list > .item {
+    margin-left: 1.5em;
 }
 .flexslider {
     background-color: rgb(247, 247, 247);
@@ -31,65 +34,63 @@
 </style>
 {% endblock %}
 
-{% block jquery %}
-    
-    $('#carousel').flexslider({
-        animation: "slide",
-        controlNav: false,
-        animationLoop: false,
-        slideshow: false,
-        itemWidth: 240,
-        itemMargin: 10,
-        move: 3,
-    });
-
-{% endblock %}
-
 {% block content %}
 
-{% category_list var:"list" gid:gid istop:1 only_open:1 current:parent_id %}
+{% category_list var:"list" gid:gid istop:1 only_open:1 current:parent_id show_all:1 %}
 {% if list.rows %}
-<div class="shopcate">
+<div class="ui responsive grid">
+    <div class="row">
+        <div class="column">
+			<div class="ui horizontal list">
+                {% for cat in list.rows %}
+                    {% if !cat._id %}
+                    <a href="{{ app_url_action_base }}/shop/getlist?gid={{ gid }}" class="{{ cat.active }} item">{{ cat.title }}</a>
+                    {% else %}
+                    <a href="{{ cat.view_url }}" class="{{ cat.active }} item">{{ cat.title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="shopcate banner">
     <div class="ui responsive grid">
         <div class="row">
             <div class="center aligned column">
-                <div id="carousel" class="flexslider">
-                    <ul class="slides">
-						{% for cat in list.rows %}
-                            <li>
-                                <a href="{{ cat.view_url }}" class="image">
-                                    <img src="{{ cat.cover }}" />
-                                </a>
-                                <p class="catitle">
-                                    <a href="{{ cat.view_url }}" class="{{ cat.active }}">{{ cat.title }}</a>
-                                </p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% if !current_category.pid %}
+				<div class="ui white button">{{ gtitle}} {% if current_category %} / {{ current_category.title }}{% endif %}</div>
+                {% else %}
+                <div class="ui white button">{{ gtitle}} / {{ parent_category.title }} / {{ current_category.title }}</div>
+                {% endif %}
             </div>
         </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="shoplist">
+    
+    <div class="ui responsive grid">
         {% if parent_id %}
         <div class="row">
-            <div class="center aligned column">
-                {% category_list var:"children" pid:parent_id current:current_category._id %}
+            <div class="column">
+                {% category_list var:"children" pid:parent_id current:current_category._id show_all:1 %}
                 {% if children.rows %}
-                <div class="ui buttons">
+                <div class="ui horizontal list">
                     {% for child in children.rows %}
-                    <a href="{{ child.view_url }}" class="ui grey {{ child.active }} button">{{ child.title }}</a>
+                        {% if !child._id %}
+                        <a href="{{ app_url_action_base }}/shop/getlist?gid={{ gid }}&category_id={{ parent_id }}" class="{% if current_category._id == parent_id %}active{% endif %} item">{{ child.title }}</a>
+                        {% else %}
+                        <a href="{{ child.view_url }}" class="{{ child.active }} item">{{ child.title }}</a>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}
             </div>
         </div>
         {% endif %}
-    </div>
-</div>
-{% endif %}
-
-<div class="shoplist">
-    {% product_list var:'products' category_id:query_category_id published:2 page:page size:12 %}
-    <div class="ui responsive grid">
+        
+        {% product_list var:'products' category_id:query_category_id published:2 page:page size:12 %}
         <div class="row">
             <div class="column">
                 {% if products.rows %}

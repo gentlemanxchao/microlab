@@ -90,31 +90,27 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
 		$category_id = (int)$this->stash['category_id'];
 		$page = (int)$this->stash['page'];
         
+        $parent_category = array();
+        
         $category = new Sher_Core_Model_Category();
         // 默认未选择某分类
         if(empty($category_id)){
             // 获取组
             $gid = (int)$this->stash['gid'];
             $parent = $category->find(array('pid'=>0,'gid'=>$gid,'is_open'=>1));
-            // 默认获取第一个
             if(!empty($parent)){
-                $parent_id = $parent[0]['_id'];
-                
-        		// 获取当前类别信息
-        		$current_category = $category->extend_load((int)$parent_id);
-            
-                $children = $category->find(array('pid'=>$parent_id,'is_open'=>1));
-                for($i=0;$i<count($children);$i++){
-                    $query_category_id[] = $children[$i]['_id'];
-                }
-                if (empty($children)){
-                    $query_category_id = $category_id;
+                for($k=0;$k<count($parent);$k++){
+                    $children = $category->find(array('pid'=>$parent[$k]['_id'],'is_open'=>1));
+                    for($i=0;$i<count($children);$i++){
+                        $query_category_id[] = $children[$i]['_id'];
+                    }
                 }
             } else {
-                $current_category = array();
                 // 设置无穷大的数字，相当于结果集为空
-                $parent_id = $query_category_id = 1000000;
+                $query_category_id = 1000000;
             }
+            $parent_id = 0;
+            $current_category = array();
         } else {
     		// 获取当前类别信息
     		$current_category = $category->extend_load((int)$category_id);
@@ -133,31 +129,40 @@ class Sher_App_Action_Shop extends Sher_App_Action_Base implements DoggyX_Action
             } else {
                 $query_category_id = $category_id;
                 $parent_id = $current_category['pid'];
+                
+                // 获取父级
+                $parent_category = $category->extend_load((int)$parent_id);
             }
         }
         
         switch($gid){
             case 1601:
                 $tab_lab = 'speaker';
+                $gtitle = '全部音箱';
                 break;
             case 1602:
                 $tab_lab = 'headset';
+                $gtitle = '全部耳机';
                 break;
             case 1603:
                 $tab_lab = 'wireless';
                 break;
             case 1604:
                 $tab_lab = 'hifi';
+                $gtitle = '全部玄道HIFI';
                 break;
             default:
                 $tab_lab = 'speaker';
+                $gtitle = '全部音箱';
                 break;
         }
         $this->set_target_css_state('page_'.$tab_lab);
         
         $this->stash['query_category_id'] = $query_category_id;
 		$this->stash['current_category'] = $current_category;
+        $this->stash['parent_category']  = $parent_category;
         $this->stash['gid'] = $gid;
+        $this->stash['gtitle'] = $gtitle;
         $this->stash['parent_id'] = $parent_id;
         
         return $this->to_html_page('page/shop/tab_list.html');
