@@ -43,6 +43,8 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 		$data['content'] = $this->stash['content'];
 		$data['category_id'] = $this->stash['category_id'];
 		$data['tags'] = $this->stash['tags'];
+        $data['order_by'] = $this->stash['order_by'];
+        $data['params'] = $this->stash['params'];
         
 		// 商品价格
 		$data['market_price'] = $this->stash['market_price'];

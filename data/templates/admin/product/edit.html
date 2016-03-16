@@ -294,10 +294,10 @@
 			  	<input type="text" name="advantage" value="{{ product.advantage }}" />
 			</div>
 			<div class="field">
-				<label>产品简述</label>
+				<label>产品介绍</label>
 			  	<textarea name="summary" class="small">{{ product.summary }}</textarea>
 				<div class="ui pointing top label">
-					请详细的描述
+					请详细的介绍
 				</div>
 			</div>
 			
@@ -308,7 +308,13 @@
 					标签之间使用，逗号隔开
 				</div>
 			</div>
-
+			<div class="field">
+			  	<label for="order_by">设置排序：</label>
+				<input type="text" class="form-control" name="order_by" value="{{ product.order_by }}" />
+				<div class="ui pointing top label">
+					数字越小，越靠前!
+				</div>
+			</div>
             <div class="field">
                 <label for="video">视频链接</label>
 				{% if product.video %}
@@ -428,13 +434,17 @@
 				</div>
 			</div>
             
+			<div class="field">
+                <label for="params">产品参数</label>
+				<textarea name="params" placeholder="产品参数">{{ product.params }}</textarea>
+			</div>
+            
+            
 			<h4 class="ui dividing header">
-				产品详情
+				图文详情
 			</h4>
 			<div class="field">
-				<textarea name="content" placeholder="详细内容" id="editor">
-					{{ product.content }}
-				</textarea>
+				<textarea name="content" placeholder="图文详情" id="editor">{{ product.content }}</textarea>
 			</div>
         </div>
 	    

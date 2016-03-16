@@ -14,7 +14,8 @@ class Sher_Core_Service_Product extends Sher_Core_Service_Base {
 	  'rand' => array('random' => 1),
 	  'stick' => array('stick' => -1),
 	  'comment' => array('comment_count' => -1),
-	  'love' => array('love_count' => -1),
+	  'ordby' => array('order_by' => 1),
+      
 	);
 
     protected static $instance;

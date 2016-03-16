@@ -57,7 +57,7 @@ class Sher_Core_Model_Advertise extends Sher_Core_Model_Base  {
 		'state' => self::STATE_DRAFT,
     );
 	
-    protected $required_fields = array('title', 'web_url');
+    protected $required_fields = array('title');
 	
     protected $int_fields = array('space_id', 'view_count', 'click_count', 'ordby', 'state', 'mode', 'b_color', 'kind');
     

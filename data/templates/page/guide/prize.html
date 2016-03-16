@@ -39,69 +39,22 @@
     <div class="ui responsive grid">
 		<div class="row">
 			<div class="center aligned column">
+                {% ad_list var:'prizelist' page:1 size:500 state:2 name:'prize_list' %}
                 <div class="ui four prize cards">
-                    
+                    {% for prize in prizelist.rows %}
                     <div class="card">
                         <div class="image">
-                            <img src="/images/prix01.jpg" />
+                            <img src="{{ prize.cover.fileurl }}" />
                         </div>
                         <div class="content">
                             <div class="description">
-                                《广东省工业合作协会》<br>
-                                2014年3月<br>
-                                <span class="red">广东省全国名牌</span>
+                                {{ prize.title }}<br>
+                                {{ prize.sub_title }}<br>
+                                <span class="red">{{ prize.summary }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/prix02.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                《深圳知名品牌评价委员会》<br>
-                                2014年1月<br>
-                                <span class="red">深圳知名品牌</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/prix03.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                《太平洋网络》<br>
-                                2013年12月<br>
-                                <span class="red">编辑选择奖   H50BT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/prix04.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                《电脑迷》<br>
-                                2013年3月<br>
-                                <span class="red">读者最喜爱品牌</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/prix05.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                《电脑报》<br>
-                                2013年3月<br>
-                                <span class="red">编辑选择奖  FC50</span>
-                            </div>
-                        </div>
-                    </div>
-                
+                    {% endfor %}
                 </div>
                 
             </div>
@@ -110,52 +63,20 @@
 			<div class="center aligned column">
                 <h3 class="ui left aligned dividing header">认证</h3>
                 <div class="ui four cards">
-                    
+                    {% ad_list var:'zhenglist' page:1 size:500 state:2 name:'renzheng_list' %}
+                    {% for zheng in zhenglist.rows %}
                     <div class="card">
                         <div class="image">
-                            <img src="/images/rzx01.jpg" />
+                            <img src="{{ zheng.cover.fileurl }}" />
                         </div>
                         <div class="content">
                             <div class="description">
-                                英国NQA的ISO9001：2000 <br>
-                                质量管理体系认证
+                                {{ zheng.title }}<br>
+                                {{ zheng.sub_title }}
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/rzx02.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                3C认证
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/rzx03.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                CE认证
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/rzx04.jpg" />
-                        </div>
-                        <div class="content">
-                            <div class="description">
-                                长城安全认证
-                            </div>
-                        </div>
-                    </div>
-                    
+                    {% endfor %}
                 </div>
             </div>
         </div>

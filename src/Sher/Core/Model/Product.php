@@ -23,7 +23,11 @@ class Sher_Core_Model_Product extends Sher_Core_Model_Base {
         'content' => '',
 		# 产品标签
 		'tags'    => array(),
-		
+		# 排列顺序
+		'order_by' => 0,
+        # 参数内容
+        'params' => '',
+        
 		# 产品视频链接
 		'video' => array(),
 		
