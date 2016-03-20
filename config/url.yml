@@ -127,7 +127,7 @@ app.url.search_tag: '{$app.url.search}/search_tag?q='
 # 默认的缩略图url
 app.url.default_thumb_small: '{$app.url.images}/pic_50x50.gif'
 app.url.default_thumb_middle: '{$app.url.images}/pic_180x180.gif'
-app.url.default_thumb_big: '{$app.url.images}/pic_580x580.gif'
+app.url.default_thumb_large: '{$app.url.images}/pic_580x580.gif'
 app.url.default_thumb_middle_height: 180
 
 # 帮助中心

@@ -13,6 +13,10 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
     const STATE_FAIL = 0;		//处理失败
     const STATE_PENDING = 1;
     const STATE_OK = 2;
+    
+    //类型
+    const KIND_IMG = 1;
+    const KIND_FILE = 2;
 	
 	# 照片
     const TYPE_PHOTO = 1;
@@ -27,7 +31,9 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 	
 	# 产品图片
 	const TYPE_PRODUCT = 10;
+    const TYPE_GALLERY_PRODUCT = 12;
 	const TYPE_EDITOR_PRODUCT = 15;
+    const TYPE_FILE_PRODUCT = 16;
     
 	# 话题图片
 	const TYPE_TOPIC   = 50;
@@ -90,7 +96,7 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 	 * 重建asset url
 	 */
 	protected function extend_asset_view_url(&$row){
-		if (isset($row['thumbnails']) && is_array($row['thumbnails'])) {
+		if (isset($row['thumbnails']) && ($row['kind'] == 1) && is_array($row['thumbnails'])) {
 			foreach($row['thumbnails'] as $key => $value){
                 Doggy_Log_Helper::debug("File Path: ".$row['thumbnails'][$key]['filepath']);
 				$row['thumbnails'][$key]['view_url'] = Sher_Core_Helper_Url::asset_view_url($row['thumbnails'][$key]['filepath']);
@@ -140,6 +146,7 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 	protected function after_save() {
 		$file = $this->file();
 		$file_content = $this->file_content();
+        $kind = (int)$this->data['kind'];
 		
 	    $path = $this->filepath;
 		$asset_id = (string)$this->data['_id'];
@@ -165,18 +172,20 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 				throw new Sher_Core_Model_Exception('Save asset file failed. ' . $e->getMessage());
 			}
 			
-			// 生成其他缩略图
-    		$thumbnails = Doggy_Config::$vars['app.asset.thumbnails'];
+            if ($kind == self::KIND_IMG) {
+    			// 生成其他缩略图
+        		$thumbnails = Doggy_Config::$vars['app.asset.thumbnails'];
 		
-    		foreach($thumbnails as $key => $value){
-        		$result = Sher_Core_Util_Image::maker_thumb($path, $value, Sher_Core_Util_Constant::STROAGE_ASSET, 1);
-        		if (empty($result)){
-        			Doggy_Log_Helper::warn("Maker image thumb Jobs failed: crop image result is null.");
-        			return false;
+        		foreach($thumbnails as $key => $value){
+            		$result = Sher_Core_Util_Image::maker_thumb($path, $value, Sher_Core_Util_Constant::STROAGE_ASSET, 1);
+            		if (empty($result)){
+            			Doggy_Log_Helper::warn("Maker image thumb Jobs failed: crop image result is null.");
+            			return false;
+            		}
+		
+            		$this->update_thumbnails($result, $key, $asset_id);
         		}
-		
-        		$this->update_thumbnails($result, $key, $asset_id);
-    		}
+            }
             
 		}
     }

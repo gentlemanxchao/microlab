@@ -138,32 +138,61 @@
         </div>
     </div>
 </div>
+
 <div class="product info">
     <div class="ui responsive grid">
-        <div class="two column row">
-            <div class="column">
-                {{ product.title }}
-            </div>
-            <div class="right aligned column">
-				<div class="ui horizontal subnav divided list">
-                    <a href="{{ app_url_shop }}/view?id={{ product._id }}" class="active item">功能</a>
-                    <a href="{{ app_url_shop }}/gallery?id={{ product._id }}" class="item">图集</a>
-                    <a href="{{ app_url_shop }}/specs?id={{ product._id }}" class="item">参数</a>
-				</div>
-                <a href="{{ app_url_shop }}/nowbuy?id={{ product._id }}" class="ui active inverted black tiny button">立即购买</a>
-            </div>
-        </div>
-    </div>
-</div>    
-<div class="product content">   
-    <div class="ui responsive grid">
         <div class="row">
-            <div class="column">
-                <div class="froala-element desc">
-                    {{ product.content }}
+            <div class="eight wide column">
+                {% asset_list var:'assets' parent_id:product._id asset_type:10 size:20 %}
+                <div id="slider" class="flexslider">
+                    <ul class="slides">
+                        <li><img src="{{ product.cover.thumbnails.large.view_url }}" /></li>
+						{% for asset in assets.rows %}
+                            {% if product.cover_id != asset._id %}
+                            <li><img src="{{ asset.thumbnails.large.view_url }}" /></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div id="carousel" class="flexslider">
+                    <ul class="slides">
+                        <li><img src="{{ product.cover.thumbnails.mini.view_url }}" /></li>
+						{% for asset in assets.rows %}
+                            {% if product.cover_id != asset._id %}
+                            <li><img src="{{ asset.thumbnails.mini.view_url }}" /></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            
+            </div>
+            <div class="eight wide column">
+                <div class="attrs">
+                    <h3 class="ui header">{{ product.title }}</h3>
+                    <p>{{ product.summary }}</p>
+                </div>
+                {% if skus %}
+                    <div class="mode attrs">
+                        颜色型号：
+                        {% for m in skus %}
+                            <span class="ui inverted magenta att button" data-id="{{ m._id }}" data-price="{{ m.price }}">{{ m.mode }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="attrs buy">
+                    <p>购买数量： <input type="text" value="1" name="quantity" class="quantity" /></p>
+                    <p>优惠价格： <span class="price" id="current-price"><small class="unit"><i class="yen icon"></i></small>{{ product.sale_price }}</span></p>
+                </div>
+                
+                <div class="btns">
+                    <div class="ui inverted black tobuy large active button">加入购物车</div>
+                    <div class="ui inverted red nowbuy large active button">立即购买</div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
+    
+
 {% endblock %}

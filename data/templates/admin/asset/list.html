@@ -13,7 +13,16 @@
 			</a>
 	    </div>
 	</div>
-	{% asset_list var:'list' page:page %}
+	<div class="ui sub nav">
+		<div class="ui horizontal list">
+            <label class="item">类型：</label>
+            <a href="{{ app_url_admin_base }}/asset?domain=product" class="{% if domain == 'product' %}active {% endif %}item">产品图片</a>
+            <a href="{{ app_url_admin_base }}/asset?domain=asset" class="{% if domain == 'asset' %}active {% endif %}item">大图推荐</a>
+            <a href="{{ app_url_admin_base }}/asset?domain=topic" class="{% if domain == 'topic' %}active {% endif %}item">新闻图片</a>
+        </div>
+	</div>
+    
+	{% asset_list var:'list' page:page domain:domain %}
 	<table class="ui small table segment">
 		<thead>
 			<tr>
@@ -27,7 +36,6 @@
 				<th class="six wide">文件名</th>
 				<th>最后更新时间</th>
 				<th>文件大小</th>
-				<th>所属目标</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -50,10 +58,6 @@
 				<td>{{ asset.created_on|date 'Y-m-d H:i:s' }}</td>
 				<td>
 					{{ asset.size|filesize }}
-				</td>
-				<td>
-                    asset_type: {{ asset.asset_type }}<br />
-                    parent_id: {{ asset.parent_id }}
 				</td>
 				<td>
 					<a href="{{ app_url_admin }}/asset/delete?id={{ asset._id }}" class="ui ajax link">删除</a>

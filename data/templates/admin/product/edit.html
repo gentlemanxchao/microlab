@@ -196,7 +196,7 @@
 		maxImageSize: 1024 * 1024 * 5, // 5M
 		imageDeleteURL: '{{ app_url_action_base }}/asset/delete_from_editor',
         assetType: {{ editor_asset_type }},
-        assetDomain: '{{ editor_domain|default 'product' }}',
+        assetDomain: '{{ domain|default 'product' }}',
         parent_id: {{ product._id|default 0 }},
         fetchUploadURL: '{{ app_url_action_base }}/uploader/fetch_upload_assets',
 	}).on('editable.imageInserted',  function (e, editor, imageURL) {
@@ -212,7 +212,6 @@
     });
     
 	$('#phenix-uploader').fineUploader({
-		debug: true,
       	request: {
 			inputName:'file',
 			params: {'x:pid': '{{ pid }}', 'x:domain': '{{ domain }}', 'x:ord': ord, 'x:user_id': {{ visitor._id }},'x:asset_type': {{ asset_type }},'x:parent_id': '{{ product._id }}','file_id': '{{ pid }}' },
@@ -254,6 +253,68 @@
 			$('#product_cover_id').val(id);
 			return false;
 		});
+	});
+    
+	$('#gallery-uploader').fineUploader({
+      	request: {
+			inputName:'file',
+			params: {'x:pid': '{{ gid }}', 'x:domain': '{{ domain }}', 'x:ord': ord, 'x:user_id': {{ visitor._id }},'x:asset_type': {{ gallery_type }},'x:parent_id': '{{ product._id }}','file_id': '{{ gid }}' },
+        	endpoint: '{{ app_url_upload_gallery }}'
+      	},
+		text: {
+            uploadButton: '<a class="ui active red labeled inverted icon upload button" href="javascript:void(0);"><i class="cloud upload icon"></i>选择图片</a>'
+		},
+		template: '<div class="qq-uploader">' +
+					'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
+					'<div class="qq-upload-button">{uploadButtonText}</div>' +
+					'<span class="qq-drop-processing"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
+					'<ul class="qq-upload-list clearfix" style="margin-top: 5px; text-align: center;"></ul>' +
+					'</div>',
+		validation: {
+	        allowedExtensions: ['jpeg', 'jpg', 'png'],
+	        sizeLimit: 5242880 // 5M = 5 * 1024 * 1024 bytes
+	    }
+    }).on('complete', function (event, id, name, result) {
+		if(result.is_error){
+			$('#product-upload-form').addClass('error');
+			sher.show_error_message(result.message, $('#product-upload-form'));
+		}else{
+			$('.qq-upload-list').children().eq(id).fadeOut();
+			
+			$.get('{{ app_url_action_base }}/uploader/check_upload_assets', {'id': '{{ product._id }}', 'assets': result.data.ids, 'type': 'gallery' });
+		}
+	});
+    
+    
+	$('#files-uploader').fineUploader({
+		debug: true,
+      	request: {
+			inputName:'file',
+			params: {'x:pid': '{{ gid }}', 'x:domain': '{{ domain }}', 'x:ord': ord, 'x:user_id': {{ visitor._id }},'x:asset_type': {{ file_type }},'x:parent_id': '{{ product._id }}','file_id': '{{ gid }}' },
+        	endpoint: '{{ app_url_upload_files }}'
+      	},
+		text: {
+            uploadButton: '<a class="ui active red labeled inverted icon upload button" href="javascript:void(0);"><i class="cloud upload icon"></i>选择文件</a>'
+		},
+		template: '<div class="qq-uploader">' +
+					'<pre class="qq-upload-drop-area"><span>{dragZoneText}</span></pre>' +
+					'<div class="qq-upload-button">{uploadButtonText}</div>' +
+					'<span class="qq-drop-processing"><span>{dropProcessingText}</span><span class="qq-drop-processing-spinner"></span></span>' +
+					'<ul class="qq-upload-list clearfix" style="margin-top: 5px; text-align: center;"></ul>' +
+					'</div>',
+		validation: {
+	        allowedExtensions: ['jpeg', 'jpg', 'png', 'pdf'],
+	        sizeLimit: 5242880 // 5M = 5 * 1024 * 1024 bytes
+	    }
+    }).on('complete', function (event, id, name, result) {
+		if(result.is_error){
+			$('#product-upload-form').addClass('error');
+			sher.show_error_message(result.message, $('#product-upload-form'));
+		}else{
+			$('.qq-upload-list').children().eq(id).fadeOut();
+			
+			$.get('{{ app_url_action_base }}/uploader/check_upload_files', {'id': '{{ product._id }}', 'assets': result.data.ids, 'asset_type': {{ file_type }}, 'asset_domain': '{{ domain }}' });
+		}
 	});
 
 {% endblock %}
@@ -315,16 +376,6 @@
 					数字越小，越靠前!
 				</div>
 			</div>
-            <div class="field">
-                <label for="video">视频链接</label>
-				{% if product.video %}
-					{% for video in product.video %}
-				  	<input type="text" name="video[]" placeholder="支持优酷/腾讯视频分享" value="{{ video }}" />
-					{% endfor %}
-				{% else %}
-					<input type="text" name="video[]" placeholder="支持优酷/腾讯视频分享：http://player.youku.com/embed/********* 链接格式" />
-				{% endif %}
-            </div>
             
 			<h4 class="ui dividing header">选择分类</h4>
 			<div class="grouped inline fields">
@@ -434,11 +485,59 @@
 				</div>
 			</div>
             
+			<h4 class="ui dividing header">
+				产品图集
+			</h4>
 			<div class="field">
-                <label for="params">产品参数</label>
-				<textarea name="params" placeholder="产品参数">{{ product.params }}</textarea>
+			  	<div id="gallery-uploader"></div>
+			
+				<div id="gallery-list" class="ui four blocks">
+					{% if mode == 'edit' %}
+						{% asset_list var:'images' parent_id:product._id asset_type:12 size:30 %}
+						{% for p in images.rows %}
+						<div class="thumb block" id="{{ p._id }}">
+							<div class="image">
+								<img src="{{ p.thumbnails.mini.view_url }}" />
+								<input type="hidden" class="asset_id_list" name="asset[]" value="{{ p._id }}" />
+							</div>
+							<div class="buttons">
+								<div class="ui large links">
+									<a href="{{ app_url_asset }}/deleted?asset_id={{ p._id }}" class="ui link ajax pop" data-content="删除此缩略图？" data-variation="inverted">
+										<i class="remove icon"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					{% endif %}
+				</div>
 			</div>
             
+			<h4 class="ui dividing header">
+				产品参数
+			</h4>
+			<div class="field">
+                <div id="files-uploader"></div>
+                
+				<div id="files-list" class="ui four blocks">
+					{% if mode == 'edit' %}
+						{% asset_list var:'files' parent_id:product._id asset_type:16 size:30 %}
+						{% for file in files.rows %}
+                		<div class="thumb block" id="{{ file._id }}">
+                			<input type="hidden" class="file_id_list" name="file_asset[]" value="{{ file._id }}" />
+                            <div class="buttons">
+                                <div class="ui links">
+                                    <span>{% if file.kind == 2 %}<i class="file pdf outline icon"></i>{% else %}<i class="file image outline icon"></i>{% endif %}{{ file.filename|truncate 16, '' }}</span>
+                                    <a href="{{ app_url_asset }}/deleted?asset_id={{ file._id }}" class="ui link ajax pop" data-content="删除" data-variation="inverted">
+                					    <i class="remove icon"></i>
+                				    </a>
+                                </div>
+                            </div>
+                		</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
             
 			<h4 class="ui dividing header">
 				图文详情

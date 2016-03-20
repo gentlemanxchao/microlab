@@ -70,12 +70,7 @@ class Sher_Admin_Action_Asset extends Sher_Admin_Action_Base implements Doggy_Di
 		}
 		
 		if (!empty($id)){
-      if($model_name=='Active'){
-			  $model = new Sher_Core_Model_Active();
-      }elseif($model_name=='Product'){
- 			  $model = new Sher_Core_Model_Product();   
-      }
-
+            $model = new Sher_Core_Model_Product();
 			$model->delete_asset($id, $asset_id);
 		}else{
 			// 仅仅删除附件
@@ -86,22 +81,20 @@ class Sher_Admin_Action_Asset extends Sher_Admin_Action_Base implements Doggy_Di
 		return $this->to_taconite_page('ajax/delete_asset.html');
 	}
 
-  /**
-   * 保存图片描述信息
-   */
-  public function save_asset_desc(){
-    if(empty($this->stash['asset_id'])){
- 			return $this->ajax_note('参数不完整！', true); 
+    /**
+     * 保存图片描述信息
+     */
+    public function save_asset_desc() {
+        if (empty($this->stash['asset_id'])) {
+            return $this->ajax_note('参数不完整！', true); 
+        }
+        $asset = new Sher_Core_Model_Asset();
+        $ok = $asset->update_set($this->stash['asset_id'], array('desc'=>$this->stash['desc']));
+        if ($ok) {
+            return $this->to_taconite_page('ajax/save_asset_desc.html');   
+        } else {
+            return $this->ajax_note('保存失败！', true);   
+        }
     }
-    $asset = new Sher_Core_Model_Asset();
-    $ok = $asset->update_set($this->stash['asset_id'], array('desc'=>$this->stash['desc']));
-    if($ok){
- 		  return $this->to_taconite_page('ajax/save_asset_desc.html');   
-    }else{
-  	  return $this->ajax_note('保存失败！', true);   
-    }
-  }
-	
 	
 }
-?>

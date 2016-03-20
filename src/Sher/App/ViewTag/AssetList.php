@@ -18,8 +18,10 @@ class Sher_App_ViewTag_AssetList extends Doggy_Dt_Tag {
         $page = 1;
         $size = 20;
 		
+        $domain = '';
         $parent_id = 0;
 		$asset_type = 0;
+        $kind = 0;
 		$sort = 'latest';
 		
         $var = 'list';
@@ -36,13 +38,19 @@ class Sher_App_ViewTag_AssetList extends Doggy_Dt_Tag {
      	
         $options['sort_field'] = $sort;
 		
-		if($parent_id){
+        if ($domain) {
+            $query['domain'] = $domain;
+        }
+		if ($parent_id) {
 			$query['parent_id'] = $parent_id;
 		}
-		if($asset_type){
+		if ($asset_type) {
 			$query['asset_type'] = (int)$asset_type;
 		}
-		
+		if ($kind) {
+		    $query['kind'] = (int)$kind;
+		}
+        
         $service = Sher_Core_Service_Asset::instance();
         $options['page'] = $page;
         $options['size'] = $size;

@@ -44,7 +44,6 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 		$data['category_id'] = $this->stash['category_id'];
 		$data['tags'] = $this->stash['tags'];
         $data['order_by'] = $this->stash['order_by'];
-        $data['params'] = $this->stash['params'];
         
 		// 商品价格
 		$data['market_price'] = $this->stash['market_price'];
@@ -102,11 +101,15 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 			if(isset($data['asset']) && !empty($data['asset'])){
 				$asset->update_batch_assets($data['asset'], $id);
 			}
-
+            
+            if (isset($this->stash['file_asset']) && !empty($this->stash['file_asset'])) {
+                $asset->update_batch_assets($this->stash['file_asset'], $id);
+            }
+            
 			// 保存成功后，更新编辑器图片
 			if(!empty($this->stash['file_id'])){
-			  Doggy_Log_Helper::debug("Upload file count for admin product");
-				$asset->update_editor_asset($this->stash['file_id'], (int)$id);
+			    Doggy_Log_Helper::debug("Upload file count for admin product");
+			    $asset->update_editor_asset($this->stash['file_id'], (int)$id);
 			}
             
 		}catch(Sher_Core_Model_Exception $e){
@@ -292,18 +295,23 @@ class Sher_Admin_Action_Product extends Sher_Admin_Action_Base {
 		}
 		$this->stash['mode'] = $mode;
 		
+        $this->stash['domain'] = Sher_Core_Util_Constant::STROAGE_PRODUCT;
+        
 		// 编辑器上传附件
 		$callback_url = Doggy_Config::$vars['app.url.qiniu.onelink'];
 		$this->stash['editor_pid'] = new MongoId();
-
-		$this->stash['editor_domain'] = Sher_Core_Util_Constant::STROAGE_PRODUCT;
 		$this->stash['editor_asset_type'] = Sher_Core_Model_Asset::TYPE_EDITOR_PRODUCT;
 		
 		// 产品图片上传
 		$this->stash['pid'] = new MongoId();
-
-		$this->stash['domain'] = Sher_Core_Util_Constant::STROAGE_PRODUCT;
 		$this->stash['asset_type'] = Sher_Core_Model_Asset::TYPE_PRODUCT;
+        
+        // 产品图集
+        $this->stash['gid'] = new MongoId();
+        $this->stash['gallery_type'] = Sher_Core_Model_Asset::TYPE_GALLERY_PRODUCT;
+        
+        
+        $this->stash['file_type'] = Sher_Core_Model_Asset::TYPE_FILE_PRODUCT;
 		
 		return $this->to_html_page('admin/product/edit.html');
 	}
