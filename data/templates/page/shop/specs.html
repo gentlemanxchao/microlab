@@ -87,7 +87,7 @@
                             <div class="header">
                               附件下载
                             </div>
-                            <p>{{ file.filename }}</p>
+                            <p><a href="{{ file.view_url }}" target="_blank">{{ file.filename }}</a></p>
                         </div>
                     </div>
                     {% endfor %}
