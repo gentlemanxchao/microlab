@@ -66,6 +66,7 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 			'mini'    => array(),
 			'medium'  => array(),
 			'large'   => array(),
+            'big'     => array(),
 		),
 
         // 类型
@@ -77,7 +78,7 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
     );
 	
 	# 附件类型
-	protected $thumbnails = array('mini', 'medium', 'large');
+	protected $thumbnails = array('mini', 'medium', 'large', 'big');
 	
     protected $required_fields = array('filepath');
 	
@@ -111,6 +112,9 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
 					'view_url' => Doggy_Config::$vars['app.url.default_thumb_middle'],
 				),
 				'large'   => array(
+					'view_url' => Doggy_Config::$vars['app.url.default_thumb_large'],
+				),
+				'big'     => array(
 					'view_url' => Doggy_Config::$vars['app.url.default_thumb_large'],
 				),
 			);
@@ -177,6 +181,7 @@ class Sher_Core_Model_Asset extends Sher_Core_Model_Base {
         		$thumbnails = Doggy_Config::$vars['app.asset.thumbnails'];
 		
         		foreach($thumbnails as $key => $value){
+                    Doggy_Log_Helper::warn("Maker image thumb $key / $value .");
             		$result = Sher_Core_Util_Image::maker_thumb($path, $value, Sher_Core_Util_Constant::STROAGE_ASSET, 1);
             		if (empty($result)){
             			Doggy_Log_Helper::warn("Maker image thumb Jobs failed: crop image result is null.");

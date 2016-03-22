@@ -19,22 +19,20 @@
 }
 
 #slider {
-    border: 1px solid #ff3366;
     padding: 20px;
     width: 860px;
-    margin: 0px auto 20px;
+    margin: 0px auto;
 }
 #slider .flex-viewport {
-    height: 435px;
+    height: 525px;
 }
 #slider .slides img {
-    width: 580px;
-    height: 435px;
+    max-width: 100%;
     margin: 0px auto;
 }
 #carousel {
     width: 780px;
-    margin: 0px auto 50px;
+    margin: 0px auto 25px;
 }
 #carousel .slides img {
     width: 65px;
@@ -131,10 +129,9 @@
                 {% asset_list var:'assets' parent_id:product._id asset_type:12 size:20 %}
                 <div id="slider" class="flexslider">
                     <ul class="slides">
-                        <li><img src="{{ product.cover.thumbnails.large.view_url }}" /></li>
 						{% for asset in assets.rows %}
                             {% if product.cover_id != asset._id %}
-                            <li><img src="{{ asset.thumbnails.large.view_url }}" /></li>
+                            <li><img src="{{ asset.thumbnails.big.view_url }}" /></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -142,7 +139,6 @@
                 
                 <div id="carousel" class="flexslider">
                     <ul class="slides">
-                        <li><img src="{{ product.cover.thumbnails.mini.view_url }}" /></li>
 						{% for asset in assets.rows %}
                             {% if product.cover_id != asset._id %}
                             <li><img src="{{ asset.thumbnails.mini.view_url }}" /></li>

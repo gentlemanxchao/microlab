@@ -473,6 +473,17 @@ a,.ui.breadcrumb a {
     line-height: 2.225em;
 }
 
+.order-item {
+    margin-top: 15px;
+}
+
+.order-item > .ui.celled.grid {
+    margin: 0px;
+}
+
+.order-item .ui.basic.table {
+    border: none;
+}
 /* 发展纪事*/
 .history.banner {
 	color: white;
