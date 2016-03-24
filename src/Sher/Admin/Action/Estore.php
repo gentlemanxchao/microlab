@@ -65,6 +65,11 @@ class Sher_Admin_Action_Estore extends Sher_Admin_Action_Base implements DoggyX_
 		}
 		$this->stash['mode'] = $mode;
         
+        $areas = new Sher_Core_Model_Areas();
+        $provinces = $areas->fetch_provinces();
+        
+        $this->stash['provinces'] = $provinces;
+        
 		return $this->to_html_page('admin/estore/edit.html');
 	}
 	

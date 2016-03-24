@@ -75,12 +75,11 @@
     			  	<input type="text" name="name" value="{{ estore.name }}" />
     			</div>
                 
-                {% province_list var:'citys' page:1 size:500 %}
     			<div class="field">
     				<label for="domain">所属地区：</label>
                     <select class="ui dropdown" name="city_id">
-                      {% for g in citys.rows %}
-                      <option value="{{ g._id }}">{{ g.name }}</option>
+                      {% for g in provinces %}
+                      <option value="{{ g._id }}">{{ g.city }}</option>
                       {% endfor %}
                     </select>
     			</div>

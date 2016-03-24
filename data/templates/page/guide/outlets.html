@@ -63,11 +63,10 @@
         <div class="row">
             <div class="left aligned twelve wide column">
                 
-                {% province_list var:'citys' page:1 size:500 %}
                 <select class="ui dropdown" name="city_id">
                     <option value="0">选择省市</option>
-                    {% for g in citys.rows %}
-                    <option value="{{ g._id }}" {% if city_id == g._id %}selected="selected"{% endif %}>{{ g.name }}</option>
+                    {% for g in provinces %}
+                    <option value="{{ g._id }}" {% if city_id == g._id %}selected="selected"{% endif %}>{{ g.city }}</option>
                     {% endfor %}
                 </select>
                 

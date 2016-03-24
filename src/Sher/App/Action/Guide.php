@@ -92,6 +92,12 @@ class Sher_App_Action_Guide extends Sher_App_Action_Base {
 	 */
 	public function outlets() {
 		$this->set_target_css_state('page_outlets');
+        
+        $areas = new Sher_Core_Model_Areas();
+        $provinces = $areas->fetch_provinces();
+        
+        $this->stash['provinces'] = $provinces;
+        
 		return $this->to_html_page('page/guide/outlets.html');
 	}
     
