@@ -40,7 +40,7 @@ class Sher_Core_Model_Estore extends Sher_Core_Model_Base {
     protected $int_fields = array('user_id','deleted');
     
     protected $joins = array(
-        'province' => array('city_id' => 'Sher_Core_Model_Province'),
+        'province' => array('city_id' => 'Sher_Core_Model_Areas'),
     );
     
 	/**
