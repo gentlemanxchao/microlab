@@ -4,7 +4,9 @@
  * @author purpen
  */
 class Sher_App_Action_Guide extends Sher_App_Action_Base {
-	public $stash = array();
+	public $stash = array(
+	    'city_id' => 1,
+	);
 	
 	protected $exclude_method_list = '*';
 	
