@@ -309,13 +309,13 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 		// 红包金额
 		$card_money = 0.0;
 
-    //礼品券金额
-    $gift_money = 0.0;
+        //礼品券金额
+        $gift_money = 0.0;
 
-    //鸟币数量
-    $bird_coin_count = 0;
-    //鸟币抵金额
-    $bird_coin_money = 0.0;
+        //鸟币数量
+        $bird_coin_count = 0;
+        //鸟币抵金额
+        $bird_coin_money = 0.0;
 		
 		// 设置订单默认值
 		$default_data = array(
@@ -327,9 +327,9 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 			'freight' => $freight,
 			'card_money' => $card_money,
 			'coin_money' => $coin_money,
-      'gift_money' => $gift_money,
-      'bird_coin_money' => $bird_coin_money,
-      'bird_coin_count' => $bird_coin_count,
+            'gift_money' => $gift_money,
+            'bird_coin_money' => $bird_coin_money,
+            'bird_coin_count' => $bird_coin_count,
 	        'invoice_caty' => 'p',
 	        'invoice_content' => 'd'
 	    );
@@ -354,93 +354,6 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 		}
 		
 		return $order_info;
-	}
-	
-	/**
-	 * 订购预售产品，不享用红包优惠
-	 * 无购物车，直接生产临时订单
-	 */
-	public function preorder(){
-		$r_id = $this->stash['r_id'];
-		if (empty($r_id)){
-			return $this->show_message_page('操作不当，请查看购物帮助！', true);
-		}
-		
-		$default_quantity = 1;
-		$user_id = $this->visitor->id;
-		
-		// 验证库存数量
-		$inventory = new Sher_Core_Model_Inventory();
-		$enoughed = $inventory->verify_enough_quantity($r_id, $default_quantity);
-		if(!$enoughed){
-			return $this->show_message_page('挑选的产品已售完！', true);
-		}
-		$item = $inventory->load((int)$r_id);
-		
-		$product_id = !empty($item) ? $item['product_id'] : $r_id;
-		
-		// 获取产品信息
-		$product = new Sher_Core_Model_Product();
-		$product_data = $product->extend_load((int)$product_id);
-		if(empty($product_data)){
-			return $this->show_message_page('此产品不存在或被删除，请核对！', true);
-		}
-		// 检测预售是否结束
-		if($product_data['presale_finished']){
-			return $this->show_message_page('此产品预售已结束！', true);
-		}
-
-		// 抢购商品不能加入购物车
-		if($product_data['snatched']){
-			return $this->show_message_page('此产品为活动商品！', true);
-		}
-		
-		$items = array(
-			array(
-				'sku'  => $r_id,
-				'product_id' => $product_id,
-				'quantity' => $default_quantity,
-				'price' => $item['price'],
-				'sale_price' => $item['price'],
-				'title' => $product_data['title'],
-				'cover' => $product_data['cover']['thumbnails']['mini']['view_url'],
-				'view_url' => $product_data['view_url'],
-				'subtotal' => $item['price']*$default_quantity,
-			),
-		);
-		$total_money = $item['price']*$default_quantity;
-		$items_count = 1;
-		
-		$order_info = $this->create_temp_order($items, $total_money, $items_count);
-		
-		if (empty($order_info)){
-			return $this->show_message_page('系统出了小差，请稍后重试！', true);
-		}
-		
-		// 获取快递费用
-		$freight = Sher_Core_Util_Shopping::getFees();
-		
-		// 优惠活动费用
-		$coin_money = 0.0;
-		
-		$pay_money = $total_money + $freight - $coin_money;
-		
-		$this->stash['order_info'] = $order_info;
-		$this->stash['data'] = $order_info['dict'];
-		$this->stash['pay_money'] = $pay_money;
-		
-		// 预售订单标识
-		$this->stash['preorder'] = 1;
-		
-		// 获取省市列表
-		$areas = new Sher_Core_Model_Areas();
-		$provinces = $areas->fetch_provinces();
-		
-		$this->stash['provinces'] = $provinces;
-		
-		$this->set_extra_params();
-		
-		return $this->to_html_page('page/shopping/checkout.html');
 	}
 	
 	/**
@@ -488,13 +401,13 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 			// 红包金额
 			$card_money = 0.0;
 
-      //礼品券金额
-      $gift_money = 0.0;
+            //礼品券金额
+            $gift_money = 0.0;
 
-    //鸟币数量
-    $bird_coin_count = 0;
-    //鸟币抵金额
-    $bird_coin_money = 0.0;
+            //鸟币数量
+            $bird_coin_count = 0;
+            //鸟币抵金额
+            $bird_coin_money = 0.0;
 			
 			// 设置订单默认值
 			$default_data = array(
@@ -505,10 +418,10 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 		        'invoice_type' => 0,
 				'freight' => $freight,
 				'card_money' => $card_money,
-        'coin_money' => $coin_money,
-        'gift_money' => $gift_money,
-        'bird_coin_count' => $bird_coin_count,
-        'bird_coin_money' => $bird_coin_money,
+                'coin_money' => $coin_money,
+                'gift_money' => $gift_money,
+                'bird_coin_count' => $bird_coin_count,
+                'bird_coin_money' => $bird_coin_money,
 		        'invoice_caty' => 1,
 		        'invoice_content' => 'd'
 		    );
@@ -562,9 +475,12 @@ class Sher_App_Action_Shopping extends Sher_App_Action_Base implements DoggyX_Ac
 
 		Doggy_Log_Helper::debug("Submit Order [$rrid]！");
 		
+		// 是否立即购买订单
+		$is_nowbuy = isset($this->stash['is_nowbuy']) ? (int)$this->stash['is_nowbuy'] : false;
+        
 		// 验证购物车，无购物不可以去结算
 		$cart = new Sher_Core_Util_Cart();
-		if (empty($cart->com_list)){
+		if (!$is_nowbuy && empty($cart->com_list)){
 			return $this->ajax_json('订单产品缺失，请重试！', true);
 		}
 		
