@@ -131,7 +131,7 @@
                     <ul class="slides">
 						{% for asset in assets.rows %}
                             {% if product.cover_id != asset._id %}
-                            <li><img src="{{ asset.thumbnails.big.view_url }}" /></li>
+                            <li><img src="{{ asset.view_url }}" /></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
