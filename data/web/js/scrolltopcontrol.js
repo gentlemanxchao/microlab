@@ -9,8 +9,8 @@ var scrolltotop={
 	//startline: Integer. Number of pixels from top of doc scrollbar is scrolled before showing control
 	//scrollto: Keyword (Integer, or "Scroll_to_Element_ID"). How far to scroll document up when control is clicked on (0=top).
 	setting: {startline:1, scrollto: 0, scrollduration:1000, fadeduration:[500, 100]},
-	controlHTML: '<img src="/images/gotop.png" style="width:40px; height:40px;filter:alpha(opacity=30);" />', //HTML for control, which is auto wrapped in DIV w/ ID="topcontrol"
-	controlattrs: {offsetx:182, offsety:68}, //offset of control relative to right/ bottom of window corner
+	controlHTML: '<img src="/images/gotop.png" style="width:40px; height:40px;filter:alpha(opacity=40);" />', //HTML for control, which is auto wrapped in DIV w/ ID="topcontrol"
+	controlattrs: {offsetx:80, offsety:100}, //offset of control relative to right/ bottom of window corner
 	anchorkeyword: '#top', //Enter href value of HTML anchors on the page that should also act as "Scroll Up" links
 
 	state: {isvisible:false, shouldvisible:false},

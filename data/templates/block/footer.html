@@ -33,7 +33,7 @@
 					<a href="{{ app_url_guide }}/outlets" class="{{ css_page_outlets }} item">销售网点</a>
 					<!--a href="{{ app_url_guide }}/store" class="{{ css_page_store }} item">门店展示</a-->
                     <a href="http://113.98.196.141/tiaoma/index.asp?id=1&t=chan-pin-zhen-wei-cha-xun" class="item" target="_blank">防伪验证</a>
-                    <a href="" class="{{ css_page_agreement }} item" target="_blank">资料下载</a>
+                    <a href="ftp://113.98.196.130" class="{{ css_page_agreement }} item" target="_blank">资料下载</a>
 				</div>
             </div>
             <div class="column">
@@ -52,10 +52,10 @@
                         </h2>
                     </div>
                     <div class="item">
-                        <a href="" title="新浪微博" target="_blank" rel="nofollow">
+                        <a href="http://weibo.com/microlab200" title="新浪微博" target="_blank" rel="nofollow">
                             <i class="icon red weibo"></i>
                         </a>                        
-                        <a href="" title="微信" target="_blank" rel="nofollow">
+                        <a href="javascript:void(0);" title="微信" target="_blank" id="wechat" rel="nofollow">
                             <i class="icon green wechat"></i>
                         </a>
                     </div>
@@ -73,9 +73,14 @@
     <div class="ui responsive grid">
 		<div class="row">
 			<div class="column">
+				<div class="ui horizontal list">
+                    <a href="http://microlab.jd.com" class="item" target="_blank">京东旗舰店</a>
+                    <a href="http://microlab.tmall.com" class="item" target="_blank">天猫旗舰店</a>
+                </div>
                 <p class="beian">Copyright © 2016 Microlab.com.All rights reserved. <br />
                     <img src="/images/gswj.png" class="gswj" >备案/许可证号：【<a href="http://www.beianbeian.com/beianxinxi/00aba633-1456-402a-aaf4-6cd69ab2ce52.html" target="_blank">粤ICP备11009417号</a>】</p>
 			</div>
         </div>
     </div>
 </div>
+{% include "block/qrcode.html" %}

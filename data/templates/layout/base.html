@@ -66,6 +66,7 @@
         <script src="{{ app_url_domain }}/js/mustache.js" type="text/javascript"></script>
         <script src="{{ app_url_domain }}/js/jquery.fineuploader-3.5.0.min.js" type="text/javascript"></script>
         <script src="{{ app_url_domain }}/js/jquery.flexslider.js" type="text/javascript"></script>
+        <script src="{{ app_url_domain }}/js/scrolltopcontrol.js" type="text/javascript"></script>
         <script src="{{ app_url_domain }}/js/sher.js" type="text/javascript"></script>
 		
 		{% block layout_js %}{% endblock %}
@@ -87,6 +88,11 @@
 			sher.visitor = {{ visitor_json }};
 			
     		sher.initial();
+            
+            $('#wechat').click(function(){
+                $('.ui.wechat.modal').modal('show');
+                return false;
+            });
             
     		{% block layout_jquery %}{% endblock %}
     		{% block jquery %}{% endblock %}
