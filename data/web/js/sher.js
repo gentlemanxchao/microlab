@@ -363,3 +363,8 @@ sher.bind_share_list = function() {
 	});
  
 };
+
+// 显示登录弹出框
+sher.show_login_box = function() {
+	$('.ui.loginbox.modal').modal('show');
+}

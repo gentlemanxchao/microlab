@@ -97,6 +97,11 @@
     
 	// 加入购物车
 	$('.ui.tobuy.button').click(function(){
+        // 所有ajax请求，验证是否登录
+        if (!sher.visitor.is_login){
+            sher.show_login_box();
+            return false;
+        }
 		if (choosed_sku){
 			$.post('{{ app_url_cart_buy }}', {sku: choosed_sku});
 		} else {
@@ -194,5 +199,6 @@
     </div>
 </div>
     
+{% include "block/loginbox.html" %}
 
 {% endblock %}
