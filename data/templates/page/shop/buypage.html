@@ -134,10 +134,8 @@
             <div class="column">
                 <div class="ui breadcrumb">
                     <a class="section" href="{{ app_url_domain }}">首页</a>
-                    {% if select_category %}
                     <i class="right angle icon divider"></i>
-                    <a class="section">{{ select_category.group.name }}</a>
-                    {% endif %}
+                    <div class="section">产品</div>
                     <i class="right angle icon divider"></i>
                     <div class="active section">{{ product.title }}</div>
                 </div>
